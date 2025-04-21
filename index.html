@@ -3,21 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skyline SMP | Modern Minecraft Experience</title>
+    <title>Skyline SMP | Next-Gen Minecraft Experience</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0070f3;
-            --secondary: #7928ca;
-            --accent: #ff0080;
-            --background: #ffffff;
-            --foreground: #111111;
-            --muted: #f5f5f5;
-            --muted-foreground: #737373;
-            --border: #e5e5e5;
-            --radius: 0.5rem;
+            --bg-primary: #0a0c0a;
+            --bg-secondary: #111311;
+            --bg-tertiary: #1a1e1a;
+            --accent-primary: #00ff8c;
+            --accent-secondary: #00c8a0;
+            --accent-tertiary: #c8ff00;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.5);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * {
@@ -27,17 +33,133 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            color: var(--foreground);
-            background-color: var(--background);
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 1200px;
+            width: 100%;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            letter-spacing: -0.03em;
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            letter-spacing: -0.01em;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--bg-primary);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-secondary), var(--accent-tertiary));
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .btn-icon {
+            margin-left: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .btn:hover .btn-icon {
+            transform: translateX(5px);
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.5);
+            border-color: var(--accent-primary);
         }
 
         /* Header */
@@ -46,24 +168,29 @@
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            background-color: rgba(255, 255, 255, 0.8);
-            border-bottom: 1px solid var(--border);
-            transition: all 0.3s ease;
+            z-index: 1000;
+            transition: var(--transition);
+            padding: 1.5rem 0;
         }
 
-        .header-content {
+        header.scrolled {
+            background: rgba(10, 12, 10, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+        }
+
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 80px;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 700;
-            color: var(--foreground);
+            color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -71,75 +198,59 @@
         }
 
         .logo span {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: var(--accent-primary);
         }
 
-        nav ul {
+        .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
             list-style: none;
         }
 
-        nav a {
+        .nav-links a {
             text-decoration: none;
-            color: var(--foreground);
+            color: var(--text-secondary);
             font-weight: 500;
-            transition: color 0.2s ease;
+            font-size: 1.125rem;
+            transition: var(--transition);
             position: relative;
         }
 
-        nav a:hover {
-            color: var(--primary);
+        .nav-links a:hover {
+            color: var(--text-primary);
         }
 
-        nav a::after {
+        .nav-links a::after {
             content: '';
             position: absolute;
             bottom: -5px;
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            transition: width 0.3s ease;
+            background: var(--accent-primary);
+            transition: var(--transition);
         }
 
-        nav a:hover::after {
+        .nav-links a:hover::after {
             width: 100%;
         }
 
-        .join-button {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .join-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .mobile-menu-button {
+        .mobile-menu-toggle {
             display: none;
             background: none;
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
+            color: var(--text-primary);
         }
 
         /* Hero Section */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             position: relative;
+            padding: 8rem 0 5rem;
             overflow: hidden;
         }
 
@@ -150,33 +261,58 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(121, 40, 202, 0.1), rgba(0, 112, 243, 0.05));
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 255, 140, 0.15), transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(200, 255, 0, 0.15), transparent 40%);
             z-index: -1;
         }
 
         .hero-content {
-            max-width: 700px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, var(--foreground), var(--primary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .hero-text {
+            max-width: 600px;
         }
 
-        .hero p {
+        .hero-subtitle {
             font-size: 1.25rem;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .hero-subtitle::before {
+            content: '';
+            width: 50px;
+            height: 2px;
+            background: var(--accent-primary);
+        }
+
+        .hero-title {
             margin-bottom: 2rem;
-            color: var(--muted-foreground);
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
         }
 
         .hero-stats {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin-top: 3rem;
         }
@@ -187,94 +323,75 @@
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             font-weight: 700;
-            color: var(--primary);
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
         }
 
         .stat-label {
             font-size: 1rem;
-            color: var(--muted-foreground);
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
         }
 
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
+        .hero-image {
+            position: relative;
         }
 
-
-
-        .secondary-button {
-            background-color: var(--muted);
-            color: var(--foreground);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
+        .hero-image-main {
+            width: 100%;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
         }
 
-        .secondary-button:hover {
-            background-color: var(--border);
-        }
-
-        .floating-shapes {
+        .hero-image-main::before {
+            content: '';
             position: absolute;
             top: 0;
-            right: 0;
-            width: 50%;
+            left: 0;
+            width: 100%;
             height: 100%;
-            z-index: -1;
-            opacity: 0.8;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
         }
 
-        .shape {
+        .hero-image-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-image-floating {
             position: absolute;
-            border-radius: 50%;
-            filter: blur(40px);
-        }
-
-        .shape-1 {
-            width: 300px;
-            height: 300px;
-            background-color: rgba(0, 112, 243, 0.2);
-            top: 20%;
-            right: 10%;
-            animation: float 20s infinite alternate ease-in-out;
-        }
-
-        .shape-2 {
             width: 200px;
             height: 200px;
-            background-color: rgba(121, 40, 202, 0.2);
-            top: 60%;
-            right: 30%;
-            animation: float 15s infinite alternate-reverse ease-in-out;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--glass-shadow);
+            z-index: 2;
         }
 
-        .shape-3 {
-            width: 150px;
-            height: 150px;
-            background-color: rgba(255, 0, 128, 0.2);
-            top: 30%;
-            right: 40%;
-            animation: float 18s infinite alternate ease-in-out;
+        .hero-image-floating.top-right {
+            top: -50px;
+            right: -50px;
+            background: var(--accent-tertiary);
         }
 
-        @keyframes float {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(40px, 40px);
-            }
+        .hero-image-floating.bottom-left {
+            bottom: -50px;
+            left: -50px;
+            background: var(--accent-primary);
         }
 
         /* About Section */
         .about {
-            padding: 8rem 0;
+            padding: 10rem 0;
             position: relative;
             overflow: hidden;
         }
@@ -286,604 +403,1009 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--muted);
-            clip-path: polygon(0 0, 100% 10%, 100% 90%, 0% 100%);
+            background: 
+                radial-gradient(circle at 80% 20%, rgba(200, 255, 0, 0.15), transparent 40%);
             z-index: -1;
         }
 
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
+        .section-header {
             text-align: center;
+            max-width: 800px;
+            margin: 0 auto 6rem;
         }
 
         .section-subtitle {
+            color: var(--accent-primary);
             font-size: 1.25rem;
-            color: var(--muted-foreground);
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 4rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .section-subtitle::before,
+        .section-subtitle::after {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: var(--accent-primary);
+        }
+
+        .section-title {
+            margin-bottom: 2rem;
+        }
+
+        .section-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
         }
 
         .about-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
         }
 
         .about-card {
-            background-color: var(--background);
-            border-radius: var(--radius);
-            padding: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 3rem;
+            text-align: center;
+            height: 100%;
         }
 
-        .about-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        }
-
-        .about-card-icon {
+        .about-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
             font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
+            color: var(--bg-primary);
         }
 
-        .about-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+        .about-title {
+            margin-bottom: 1.5rem;
         }
 
-        .about-card p {
-            color: var(--muted-foreground);
+        .about-description {
+            color: var(--text-secondary);
         }
 
         /* Features Section */
         .features {
-            padding: 8rem 0;
+            padding: 10rem 0;
+            background-color: var(--bg-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 140, 0.15), transparent 40%);
+            z-index: 0;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-            margin-top: 4rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            position: relative;
+            z-index: 1;
         }
 
         .feature-card {
-            text-align: center;
-            padding: 2rem;
-            border-radius: var(--radius);
-            transition: transform 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+            padding: 3rem;
             height: 100%;
-            background-color: var(--muted);
-            border-radius: var(--radius);
-            z-index: -1;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            opacity: 0;
-            transform: scale(0.9);
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
         }
 
         .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-        }
-
-        .feature-card h3 {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
             font-size: 1.5rem;
-            margin-bottom: 1rem;
+            color: var(--bg-primary);
         }
 
-        .feature-card p {
-            color: var(--muted-foreground);
+        .feature-title {
+            margin-bottom: 1.5rem;
         }
 
-        /* Community Section */
-        .community {
-            padding: 8rem 0;
-            background-color: var(--muted);
+        .feature-description {
+            color: var(--text-secondary);
+        }
+
+        /* Team Section */
+        .team {
+            padding: 10rem 0;
             position: relative;
             overflow: hidden;
         }
 
-        .community::before {
+        .team::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(0, 112, 243, 0.1) 0%, rgba(121, 40, 202, 0.1) 100%);
-            z-index: 0;
+            background: 
+                radial-gradient(circle at 70% 30%, rgba(0, 200, 160, 0.15), transparent 40%);
+            z-index: -1;
         }
 
-        .community-content {
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .team-card {
+            height: 100%;
+            position: relative;
+        }
+
+        .team-image {
+            height: 350px;
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .team-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(10, 12, 10, 0.9), transparent);
+            z-index: 1;
+        }
+
+        .team-image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .team-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            z-index: 2;
+        }
+
+        .team-name {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-role {
+            color: var(--accent-primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .team-bio {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .team-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border-color: var(--accent-primary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 8rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(135deg, rgba(0, 255, 140, 0.1), rgba(0, 200, 160, 0.1)),
+                radial-gradient(circle at 50% 50%, rgba(200, 255, 0, 0.15), transparent 50%);
+            z-index: -1;
+        }
+
+        .cta-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            padding: 5rem;
+            text-align: center;
             position: relative;
             z-index: 1;
         }
 
-        .testimonials {
-            margin-top: 4rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .testimonial {
-            background-color: var(--background);
-            border-radius: var(--radius);
-            padding: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .testimonial-content {
-            font-style: italic;
-            margin-bottom: 1.5rem;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .testimonial-avatar {
-            width: 50px;
-            height: 50px;
+        .cta-container::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            background-color: var(--muted);
-            overflow: hidden;
+            background: var(--accent-primary);
+            opacity: 0.1;
+            z-index: -1;
         }
 
-        .testimonial-info h4 {
-            font-weight: 600;
+        .cta-container::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--accent-tertiary);
+            opacity: 0.1;
+            z-index: -1;
         }
 
-        .testimonial-info p {
-            color: var(--muted-foreground);
-            font-size: 0.875rem;
+        .cta-title {
+            margin-bottom: 2rem;
         }
 
-        /* Join Section */
-        .join {
-            padding: 8rem 0;
-            text-align: center;
-        }
-
-        .join-content {
+        .cta-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
             max-width: 700px;
-            margin: 0 auto;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .join h2 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .join p {
-            font-size: 1.25rem;
-            color: var(--muted-foreground);
-            margin-bottom: 2rem;
-        }
-
-        .server-address {
-            background-color: var(--muted);
-            padding: 1rem 2rem;
-            border-radius: var(--radius);
-            display: inline-block;
-            font-family: monospace;
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
         }
 
         /* Footer */
         footer {
-            background-color: var(--foreground);
-            color: var(--background);
-            padding: 4rem 0 2rem;
+            background-color: var(--bg-tertiary);
+            padding: 5rem 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 140, 0.05), transparent 30%),
+                radial-gradient(circle at 80% 20%, rgba(200, 255, 0, 0.05), transparent 30%);
+            z-index: 0;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .footer-column h3 {
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .footer-logo span {
+            color: var(--accent-primary);
+        }
+
+        .footer-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 400px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-heading {
             font-size: 1.25rem;
             margin-bottom: 1.5rem;
-            color: white;
+            color: var(--text-primary);
         }
 
-        .footer-column ul {
+        .footer-links {
             list-style: none;
         }
 
-        .footer-column li {
-            margin-bottom: 0.75rem;
+        .footer-links li {
+            margin-bottom: 1rem;
         }
 
-        .footer-column a {
-            color: var(--muted);
+        .footer-links a {
+            color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.2s ease;
+            transition: var(--transition);
         }
 
-        .footer-column a:hover {
-            color: white;
+        .footer-links a:hover {
+            color: var(--accent-primary);
         }
 
         .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
             text-align: center;
-            color: var(--muted);
-            font-size: 0.875rem;
+            color: var(--text-tertiary);
+            position: relative;
+            z-index: 1;
         }
 
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-link {
+        /* Cursor */
+        .cursor {
+            position: fixed;
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.2s ease;
+            border: 2px solid var(--accent-primary);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, border-color 0.3s;
+            z-index: 9999;
+            display: none;
         }
 
-        .social-link:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+        .cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            display: none;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-content {
-                height: 70px;
-            }
-
-            nav {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background-color: var(--background);
-                padding: 1.5rem;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                transform: translateY(-100%);
-                opacity: 0;
-                transition: transform 0.3s ease, opacity 0.3s ease;
-                z-index: 99;
-            }
-
-            nav.active {
-                transform: translateY(0);
-                opacity: 1;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-
-            .mobile-menu-button {
+        /* Responsive Styles */
+        @media (min-width: 1024px) {
+            .cursor, .cursor-dot {
                 display: block;
             }
+        }
 
-            .hero h1 {
-                font-size: 2.5rem;
+        @media (max-width: 1200px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .hero-text {
+                text-align: center;
+                margin: 0 auto;
+            }
+
+            .hero-subtitle {
+                justify-content: center;
+            }
+
+            .hero-cta {
+                justify-content: center;
             }
 
             .hero-stats {
+                justify-content: center;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .cta-container {
+                padding: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 12, 10, 0.95);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                transform: translateY(-150%);
+                transition: var(--transition);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .cta-buttons {
                 flex-direction: column;
                 gap: 1rem;
             }
 
-            .section-title {
-                font-size: 2rem;
+            .features-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
             }
         }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1s; }
     </style>
 </head>
 <body>
-    <header>
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <header id="header">
         <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">Skyline</span> SMP</a>
-                <button class="mobile-menu-button" aria-label="Toggle menu">☰</button>
-                <nav>
-                    <ul>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#community">Community</a></li>
-                        <li><a href="#join">Join Us</a></li>
-                    </ul>
-                </nav>
-                <button class="join-button">Join Server</button>
+            <div class="header-container">
+                <a href="#" class="logo">Skyline<span>SMP</span></a>
+                
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#join">Join</a></li>
+                </ul>
+                
+                <a href="#join" class="btn btn-primary">
+                    Join Server
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
             </div>
         </div>
     </header>
 
-    <section class="hero">
+    <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Experience Minecraft Like Never Before</h1>
-                <p>Skyline SMP is a thriving Minecraft community with a focus on creativity, collaboration, and adventure. Join our 200+ active players in a world of endless possibilities.</p>
-                <div class="hero-buttons">
-                    <button class="join-button">Join Now</button>
-                    <button class="secondary-button">Learn More</button>
+                <div class="hero-text">
+                    <div class="hero-subtitle animate">Established 2024</div>
+                    <h1 class="hero-title animate delay-1">Minecraft <span class="gradient-text">Survival</span> Evolved</h1>
+                    <p class="hero-description animate delay-2">Skyline SMP is a no-frills survival server focused on community, freedom, and fun. Build, explore, and thrive with 300+ active players.</p>
+                    
+                    <div class="hero-cta animate delay-3">
+                        <a href="#join" class="btn btn-primary">
+                            Start Playing
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            Explore Features
+                        </a>
+                    </div>
+
+    
+                    
+                    <div class="hero-stats">
+                        <div class="stat animate delay-4">
+                            <span class="stat-number">300+</span>
+                            <span class="stat-label">Active Players</span>
+                        </div>
+                        <div class="stat animate delay-4">
+                            <span class="stat-number">2024</span>
+                            <span class="stat-label">Established</span>
+                        </div>
+                        <div class="stat animate delay-4">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Uptime</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">300+</span>
-                        <span class="stat-label">Active Players</span>
+                
+                <div class="hero-image animate delay-3">
+                    <div class="hero-image-main">
+                        <img src="peak.png" alt="Skyline SMP Gameplay">
                     </div>
-                    <div class="stat">
-                        <span class="stat-number">2024</span>
-                        <span class="stat-label">Established</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">24/7</span>
-                        <span class="stat-label">Server Uptime</span>
-                    </div>
+                    <div class="hero-image-floating top-right float"></div>
+                    <div class="hero-image-floating bottom-left float"></div>
                 </div>
             </div>
         </div>
-        <div class="floating-shapes">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
-        </div>
     </section>
 
-    <section class="about" id="about">
+    <section id="about" class="about">
         <div class="container">
-            <h2 class="section-title">About Skyline SMP</h2>
-            <p class="section-subtitle">Founded by vyxzl and JonTheHere, later co-founded by SkyBr328, Skyline SMP has grown into one of the most vibrant Minecraft communities since its establishment in 2024.</p>
+            <div class="section-header">
+                <div class="section-subtitle animate">Why Choose Us</div>
+                <h2 class="section-title animate delay-1">A <span class="gradient-text">Different</span> Minecraft Experience</h2>
+                <p class="section-description animate delay-2">We've created a unique Minecraft server that focuses on freedom, survival, and player-driven gameplay.</p>
+            </div>
+            
             <div class="about-grid">
-                <div class="about-card">
-                    <div class="about-card-icon">🌟</div>
-                    <h3>Our Story</h3>
-                    <p>Skyline SMP began as a small server among friends and quickly grew into a thriving community. Founded by vyxzl and JonTheHere, with SkyBr328 joining as co-founder, we've created a space where creativity and friendship flourish.</p>
+                <div class="glass-card about-card animate">
+                    <div class="about-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3 class="about-title">Active Community</h3>
+                    <p class="about-description">Join a diverse and active community of over 300 players who share your passion for Minecraft.</p>
                 </div>
-                <div class="about-card">
-                    <div class="about-card-icon">🌍</div>
-                    <h3>Our World</h3>
-                    <p>Our carefully curated world offers diverse biomes, custom structures, and hidden secrets waiting to be discovered. We regularly update and expand our world to keep the experience fresh and exciting.</p>
+                
+                <div class="glass-card about-card animate delay-1">
+                    <div class="about-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                    </div>
+                    <h3 class="about-title">Raw Survival</h3>
+                    <p class="about-description">Experience Minecraft the way it was meant to be played - with minimal restrictions and true survival gameplay.</p>
                 </div>
-                <div class="about-card">
-                    <div class="about-card-icon">👥</div>
-                    <h3>Our Community</h3>
-                    <p>With over 200 active players, our community is the heart of Skyline SMP. We pride ourselves on being welcoming, supportive, and inclusive to players of all skill levels and backgrounds.</p>
+                
+                <div class="glass-card about-card animate delay-2">
+                    <div class="about-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="about-title">Dedicated Staff</h3>
+                    <p class="about-description">Our team ensures server stability and performance while letting players create their own experience.</p>
                 </div>
             </div>
         </div>
     </section>
 
-<section class="features" id="features">
-    <div class="container">
-        <h2 class="section-title">Server Features</h2>
-        <p class="section-subtitle">Discover what makes Skyline SMP a unique Minecraft experience with features designed to enhance gameplay while maintaining the essence of survival multiplayer.</p>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🏆</div>
-                <h3>Regular Events</h3>
-                <p>Participate in weekly events, competitions, and challenges with exciting rewards and opportunities to showcase your skills.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔧</div>
-                <h3>Custom Plugins</h3>
-                <p>Experience Minecraft with quality-of-life improvements and custom features that enhance gameplay without compromising the vanilla experience.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>Performance Optimized</h3>
-                <p>Enjoy a lag-free experience with our optimized server configuration, ensuring smooth gameplay even during peak hours.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🤝</div>
-                <h3>Active Staff</h3>
-                <p>Our dedicated team of moderators and administrators ensures a safe, fair, and enjoyable environment for all players.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🌎</div>
-                <h3>Community-Driven World</h3>
-                <p>Shape the world around you through collaboration, storytelling, and group builds in a friendly, tight-knit player community.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🧱</div>
-                <h3>Vanilla+ Survival</h3>
-                <p>Play Minecraft the way it was meant to be played—with subtle enhancements that add depth while preserving the survival feel.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<section class="community" id="community">
-  <div class="container">
-      <div class="community-content">
-          <h2 class="section-title">Our Community</h2>
-          <p class="section-subtitle">Join a thriving community of builders, explorers, and friends who make Skyline SMP more than just a Minecraft server.</p>
-          
-          <div class="testimonials">
-              <div class="testimonial">
-                  <p class="testimonial-content">"What truly stands out about the Skyline community is its incredible helpfulness – you can always find someone ready to assist with anything. I also love the chaotic yet exciting energy; it genuinely feels like a new adventure unfolds every day. And let's not forget the fantastic mods, like that tree-cutting mod, which make everyday tasks so much easier!"</p>
-                  <div class="testimonial-author">
-                      <div class="testimonial-info">
-                          <h4>Slickeey</h4>
-                          <p>Member since July 2024</p>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="testimonial">
-                  <p class="testimonial-content">"Skyline SMP is a blast! I really enjoy playing there because the admins are fair and there are some great plugins like tree chopping, set home, and RTP to enhance the gameplay. Plus, the allowed PvP and base raiding add an exciting edge."</p>
-                  <div class="testimonial-author">
-                      <div class="testimonial-info">
-                          <h4>TotorH67</h4>
-                          <p>Member since April 2025</p>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="testimonial">
-                  <p class="testimonial-content">"I've made real friends on this server. The community is supportive, the builds are incredible, and there's always something exciting happening."</p>
-                  <div class="testimonial-author">
-                      <div class="testimonial-info">
-                          <h4>NISHA</h4>
-                          <p>Member since Jan 2025</p>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-</section>
-
-
-
-    <section class="join" id="join">
+    <section id="features" class="features">
         <div class="container">
-            <div class="join-content">
-                <h2>Ready to Join Skyline SMP?</h2>
-                <p>Connect to our server using the address below and become part of our growing community of over 200 active players.</p>
-                <div class="server-address">play.skylinesmp.net</div>
-                <button class="join-button">Join Our Discord</button>
+            <div class="section-header">
+                <div class="section-subtitle animate">What We Offer</div>
+                <h2 class="section-title animate delay-1">Server <span class="gradient-text">Features</span></h2>
+                <p class="section-description animate delay-2">Discover what makes Skyline SMP different from other Minecraft servers.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="glass-card feature-card animate">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">True Survival</h3>
+                    <p class="feature-description">No land claiming or protection - build, raid, and survive in a world where anything goes.</p>
+                </div>
+                
+                <div class="glass-card feature-card animate delay-1">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                            <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                            <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Community Events</h3>
+                    <p class="feature-description">Participate in regular events, competitions, and challenges with exciting rewards.</p>
+                </div>
+                
+                <div class="glass-card feature-card animate">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">PVP Enabled</h3>
+                    <p class="feature-description">Battle other players, form alliances, and create your own rules in our PVP-enabled world.</p>
+                </div>
+                
+                <div class="glass-card feature-card animate delay-1">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Custom Plugins</h3>
+                    <p class="feature-description">Enjoy unique gameplay mechanics with our custom-developed plugins and features.</p>
+                </div>
+                
+                <div class="glass-card feature-card animate delay-2">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                            <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Performance</h3>
+                    <p class="feature-description">Experience smooth gameplay with our optimized server infrastructure and regular maintenance.</p>
+                </div>
+                
+                <div class="glass-card feature-card animate delay-3">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Custom World</h3>
+                    <p class="feature-description">Explore hand-crafted terrain, unique biomes, and hidden secrets across a sprawling custom map.</p>                    
+                </div>
             </div>
         </div>
     </section>
+
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle animate">The People Behind</div>
+                <h2 class="section-title animate delay-1">Meet Our <span class="gradient-text">Team</span></h2>
+                <p class="section-description animate delay-2">The dedicated individuals who make Skyline SMP possible.</p>
+            </div>
+    
+            <div class="team-grid">
+                <div class="glass-card team-card animate">
+                    <div class="team-image">
+                        <div class="team-image-placeholder">V</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">vyxzl</h3>
+                        <p class="team-role">Founder</p>
+                        <p class="team-bio">Leads server operations, manages the staff, handles programming, and ensures everything is running smoothly. Also runs the official website.</p>
+                    </div>
+                </div>
+    
+                <div class="glass-card team-card animate delay-1">
+                    <div class="team-image">
+                        <div class="team-image-placeholder">J</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">JonTheHere</h3>
+                        <p class="team-role">Founder</p>
+                        <p class="team-bio">Responsible for promoting the server and brainstorming new ideas to help improve the experience for players.</p>
+                    </div>
+                </div>
+    
+                <div class="glass-card team-card animate delay-2">
+                    <div class="team-image">
+                        <div class="team-image-placeholder">S</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">SkyBr328</h3>
+                        <p class="team-role">Co-Founder</p>
+                        <p class="team-bio">Works on promoting the server, streaming, and helping generate new ideas to keep the community engaged and active.</p>
+                    </div>
+                </div>
+    
+                <div class="glass-card team-card animate delay-3">
+                    <div class="team-image">
+                        <div class="team-image-placeholder">F</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">fonsix</h3>
+                        <p class="team-role">Admin</p>
+                        <p class="team-bio">Helps with maintaining the server, developing custom plugins, and managing scoreboards for an optimized gameplay experience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+
+    <section id="join" class="cta-section">
+        <div class="container">
+            <div class="cta-container animate">
+                <h2 class="cta-title">Ready to <span class="gradient-text">Join</span> Our Community?</h2>
+                <p class="cta-description">Become part of our growing community of over 300 active players and experience Minecraft like never before.</p>
+                <div class="cta-buttons">
+                    <a href="https://discord.skylinesmp.net" class="btn btn-primary">
+                        Join Now
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                    <!-- <a href="#" class="btn btn-secondary">Join Discord</a> --> <!--dont remove just incase fr-->
+                </div>
+            </div>
+        </div>
+    </section>
+    
 
     <footer>
-      <div class="container">
-          <div class="footer-content">
-              <div class="footer-column">
-                  <h3>Skyline SMP</h3>
-                  <p>A modern Minecraft survival multiplayer experience founded in 2024 by vyxzl, JonTheHere, and co-founded by SkyBr328.</p>
-                  <div class="social-links">
-                      <a href="https://discord.skylinesmp.net" class="social-link" aria-label="Discord">
-                          <!-- Discord icon -->
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                          </svg>
-                      </a>
-                      <a href="https://youtube.com/@Vyxzl" class="social-link" aria-label="YouTube">
-                          <!-- YouTube icon -->
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-2C18.88 4 12 4 12 4s-6.88 0-8.59.42a2.78 2.78 0 0 0-1.95 2 29.94 29.94 0 0 0 0 11.16 2.78 2.78 0 0 0 1.95 2C5.12 20 12 20 12 20s6.88 0 8.59-.42a2.78 2.78 0 0 0 1.95-2 29.94 29.94 0 0 0 0-11.16z"></path>
-                              <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"></polygon>
-                          </svg>
-                      </a>
-                      <a href="https://tiktok.com/@skyline_smp" class="social-link" aria-label="TikTok">
-                          <!-- TikTok icon -->
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <path d="M9 17a4 4 0 1 1 4-4V4h3a4 4 0 0 0 4 4"></path>
-                          </svg>
-                      </a>
-                  </div>
-              </div>
-  
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#features">Server Features</a></li>
-                        <li><a href="#community">Community</a></li>
-                        <li><a href="#join">Join Server</a></li>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">Skyline<span>SMP</span></div>
+                    <p class="footer-description">A modern Minecraft SMP server established in 2024 with a thriving community of over 300 active players.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="footer-heading">Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#team">Team</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul>
-                        <li><a href="https://pastebin.com/raw/hzbg3jbb">Plugins List</a></li>
+                
+                <div>
+                    <h3 class="footer-heading">Community</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://discord.skylinesmp.net">Discord</a></li>
+                        <li><a href="https://docs.google.com/forms/u/0/d/16qw-m3-TDN5VDB1gHBBhlRl3G38xYi9wSMsZeljiuqU/preview">Staff Application</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <ul>
-                        <li><a href="https://discord.gg/FBqxayrK">Discord Server</a></li>
-                        <li><a href="https://vyxzl.com/#contact">Email Support</a></li>
-                        <li><a href="https://docs.google.com/forms/u/0/d/16qw-m3-TDN5VDB1gHBBhlRl3G38xYi9wSMsZeljiuqU/preview">Apply for Staff</a></li>
+                
+                <div>
+                    <h3 class="footer-heading">Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://vyxzl.com#contact">Contact</a></li>
                     </ul>
                 </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2025 Skyline SMP. All rights reserved. Not affiliated with Mojang AB.</p>
+                <p>&copy; 2025 Skyline SMP. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        const mobileMenuButton = document.querySelector('.mobile-menu-button');
-        const nav = document.querySelector('nav');
-
-        mobileMenuButton.addEventListener('click', () => {
-            nav.classList.toggle('active');
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
         });
-
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', function(e) {
+        
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 
                 const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
                 const targetElement = document.querySelector(targetId);
                 
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-                
-                if (nav.classList.contains('active')) {
-                    nav.classList.remove('active');
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                    }
                 }
             });
         });
-
-        const header = document.querySelector('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
-            } else {
-                header.style.boxShadow = 'none';
-            }
-        });
-
-        const joinButtons = document.querySelectorAll('.join-button');
-        joinButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                window.open('https://discord.skylinesmp.net', '_blank');
+        
+        // Animation on scroll
+        const animatedElements = document.querySelectorAll('.animate');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
             });
+        }, { threshold: 0.1 });
+        
+        animatedElements.forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
         });
+        
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        
+        if (window.innerWidth > 1024) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+            });
+            
+            // Cursor hover effect
+            const links = document.querySelectorAll('a, button');
+            
+            links.forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    cursor.style.width = '60px';
+                    cursor.style.height = '60px';
+                    cursor.style.borderColor = 'var(--accent-tertiary)';
+                });
+                
+                link.addEventListener('mouseleave', () => {
+                    cursor.style.width = '40px';
+                    cursor.style.height = '40px';
+                    cursor.style.borderColor = 'var(--accent-primary)';
+                });
+            });
+        }
     </script>
 </body>
 </html>
