@@ -1,1315 +1,770 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skyline SMP | EVOLUTION Update Countdown</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-    :root {
-        --bg-dark: #0A0D16;
-        --bg-darker: #060810;
-        --accent-orange: #FF6B00;
-        --accent-orange-hover: #FF8124;
-        --accent-orange-glow: rgba(255, 107, 0, 0.4);
-        --accent-blue: #3B5FE2;
-        --accent-blue-hover: #4D6FE8;
-        --accent-blue-glow: rgba(59, 95, 226, 0.4);
-        --accent-purple: #8B5CF6;
-        --accent-purple-glow: rgba(139, 92, 246, 0.4);
-        --accent-green: #10B981;
-        --accent-green-glow: rgba(16, 185, 129, 0.4);
-        --discord-purple: #5865F2;
-        --discord-purple-glow: rgba(88, 101, 242, 0.4);
-        --text-white: #FFFFFF;
-        --text-light: #E5E7EB;
-        --text-muted: #9CA3AF;
-        --border-color: rgba(255, 255, 255, 0.1);
-        --glass-bg: rgba(255, 255, 255, 0.05);
-        --glass-border: rgba(255, 255, 255, 0.15);
-        
-        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        --elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Inter', sans-serif;
-        background: var(--bg-dark);
-        color: var(--text-white);
-        line-height: 1.6;
-        overflow-x: hidden;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-    }
-
-    .bg-animation {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -3;
-        background: 
-            radial-gradient(circle at 20% 80%, var(--accent-blue-glow) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, var(--accent-orange-glow) 0%, transparent 50%),
-            radial-gradient(circle at 50% 50%, var(--accent-purple-glow) 0%, transparent 70%),
-            radial-gradient(circle at 30% 30%, var(--accent-green-glow) 0%, transparent 60%);
-        animation: bgPulse 20s ease-in-out infinite;
-    }
-
-    @keyframes bgPulse {
-        0%, 100% { 
-            opacity: 0.6;
-            transform: scale(1) rotate(0deg); 
-        }
-        25% { 
-            opacity: 0.8;
-            transform: scale(1.05) rotate(1deg); 
-        }
-        50% { 
-            opacity: 1;
-            transform: scale(1.1) rotate(2deg); 
-        }
-        75% { 
-            opacity: 0.8;
-            transform: scale(1.05) rotate(1deg); 
-        }
-    }
-
-    .grid-bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -2;
-        background-image: 
-            linear-gradient(rgba(255, 107, 0, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(59, 95, 226, 0.1) 1px, transparent 1px);
-        background-size: 50px 50px;
-        animation: gridMove 30s linear infinite;
-        opacity: 0.3;
-    }
-
-    @keyframes gridMove {
-        0% { transform: translate(0, 0); }
-        100% { transform: translate(50px, 50px); }
-    }
-
-    .particles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        pointer-events: none;
-    }
-
-    .particle {
-        position: absolute;
-        border-radius: 50%;
-        opacity: 0.8;
-        animation: float 15s infinite linear;
-    }
-
-    .particle.orange {
-        background: radial-gradient(circle, var(--accent-orange), transparent);
-        box-shadow: 0 0 20px var(--accent-orange-glow);
-    }
-
-    .particle.blue {
-        background: radial-gradient(circle, var(--accent-blue), transparent);
-        box-shadow: 0 0 20px var(--accent-blue-glow);
-        animation-duration: 20s;
-    }
-
-    .particle.purple {
-        background: radial-gradient(circle, var(--accent-purple), transparent);
-        box-shadow: 0 0 20px var(--accent-purple-glow);
-        animation-duration: 25s;
-    }
-
-    .particle.green {
-        background: radial-gradient(circle, var(--accent-green), transparent);
-        box-shadow: 0 0 20px var(--accent-green-glow);
-        animation-duration: 18s;
-    }
-
-    @keyframes float {
-        0% {
-            transform: translateY(100vh) rotate(0deg) scale(0);
-            opacity: 0;
-        }
-        10% {
-            opacity: 0.8;
-            transform: translateY(90vh) rotate(36deg) scale(1);
-        }
-        90% {
-            opacity: 0.8;
-            transform: translateY(10vh) rotate(324deg) scale(1);
-        }
-        100% {
-            transform: translateY(-10vh) rotate(360deg) scale(0);
-            opacity: 0;
-        }
-    }
-
-    .container {
-        width: 100%;
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 2rem;
-        position: relative;
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        min-height: 100vh;
-    }
-
-    .header {
-        padding: 1.5rem 0;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 100;
-        transition: var(--transition);
-        backdrop-filter: blur(20px);
-        background: rgba(10, 13, 22, 0.8);
-        border-bottom: 1px solid var(--glass-border);
-    }
-
-    .header-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 0 2rem;
-    }
-
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        text-decoration: none;
-        transition: var(--transition);
-    }
-
-    .logo:hover {
-        transform: scale(1.05);
-    }
-
-    .logo-icon {
-        width: 2.5rem;
-        height: 2.5rem;
-        background: linear-gradient(135deg, var(--accent-orange), var(--accent-blue));
-        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-        position: relative;
-        animation: logoGlow 3s ease-in-out infinite;
-    }
-
-    @keyframes logoGlow {
-        0%, 100% { 
-            box-shadow: 0 0 20px var(--accent-orange-glow);
-            filter: hue-rotate(0deg);
-        }
-        50% { 
-            box-shadow: 0 0 30px var(--accent-blue-glow);
-            filter: hue-rotate(90deg);
-        }
-    }
-
-    .logo-text {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: var(--text-white);
-        font-family: 'Orbitron', monospace;
-    }
-
-    .logo-text span {
-        background: linear-gradient(135deg, var(--accent-orange), var(--accent-blue));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.875rem 2rem;
-        border-radius: 0.75rem;
-        font-weight: 600;
-        font-size: 1rem;
-        text-decoration: none;
-        transition: var(--transition);
-        cursor: pointer;
-        border: none;
-        position: relative;
-        overflow: hidden;
-        font-family: 'Orbitron', monospace;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-
-    .btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        transition: left 0.5s;
-    }
-
-    .btn:hover::before {
-        left: 100%;
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-hover));
-        color: var(--text-white);
-        box-shadow: 0 4px 15px var(--accent-orange-glow);
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 8px 25px var(--accent-orange-glow);
-    }
-
-    .btn-secondary {
-        background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-hover));
-        color: var(--text-white);
-        box-shadow: 0 4px 15px var(--accent-blue-glow);
-    }
-
-    .btn-secondary:hover {
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 8px 25px var(--accent-blue-glow);
-    }
-
-    .btn-discord {
-        background: linear-gradient(135deg, var(--discord-purple), #4752C4);
-        color: var(--text-white);
-        box-shadow: 0 4px 15px var(--discord-purple-glow);
-    }
-
-    .btn-discord:hover {
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 8px 25px var(--discord-purple-glow);
-    }
-
-    .countdown-section {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 6rem 0 4rem;
-        position: relative;
-    }
-
-    .update-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 1rem 2rem;
-        background: var(--glass-bg);
-        border: 2px solid var(--glass-border);
-        border-radius: 3rem;
-        font-size: 1rem;
-        font-weight: 700;
-        color: var(--accent-orange);
-        margin-bottom: 2rem;
-        backdrop-filter: blur(20px);
-        transition: var(--transition);
-        animation: badgePulse 4s ease-in-out infinite;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        font-family: 'Orbitron', monospace;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .update-badge::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, var(--accent-orange-glow), transparent);
-        animation: badgeShine 3s ease-in-out infinite;
-    }
-
-    @keyframes badgeShine {
-        0% { left: -100%; }
-        50% { left: 100%; }
-        100% { left: 100%; }
-    }
-
-    @keyframes badgePulse {
-        0%, 100% { 
-            transform: translateY(0px) scale(1);
-            box-shadow: 0 0 20px var(--accent-orange-glow);
-        }
-        50% { 
-            transform: translateY(-15px) scale(1.05);
-            box-shadow: 0 0 40px var(--accent-orange-glow);
-        }
-    }
-
-    .update-badge svg {
-        color: var(--accent-orange);
-        animation: spin 6s linear infinite;
-        filter: drop-shadow(0 0 10px var(--accent-orange-glow));
-    }
-
-    @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-
-    .countdown-title {
-        font-size: clamp(4rem, 12vw, 8rem);
-        font-weight: 900;
-        line-height: 1;
-        margin-bottom: 2rem;
-        background: linear-gradient(135deg, var(--text-white), var(--accent-orange), var(--accent-blue), var(--accent-purple));
-        background-size: 400% 400%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: titleGlow 6s ease-in-out infinite, gradientShift 8s ease-in-out infinite;
-        font-family: 'Orbitron', monospace;
-        letter-spacing: -0.02em;
-        text-transform: uppercase;
-        position: relative;
-        text-align: center;
-    }
-
-    @keyframes titleGlow {
-        0%, 100% { 
-            filter: drop-shadow(0 0 30px var(--accent-orange-glow));
-            transform: scale(1);
-        }
-        50% { 
-            filter: drop-shadow(0 0 50px var(--accent-blue-glow));
-            transform: scale(1.02);
-        }
-    }
-
-    @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    .countdown-subtitle {
-        font-size: 1.5rem;
-        color: var(--text-light);
-        max-width: 900px;
-        margin: 0 auto 4rem;
-        animation: fadeInUp 1s ease-out 0.5s both;
-        text-align: center;
-        line-height: 1.6;
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .countdown-timer {
-        display: flex;
-        gap: 2rem;
-        margin-bottom: 4rem;
-        perspective: 1000px;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    .countdown-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-width: 140px;
-        animation: fadeInUp 1s ease-out calc(0.7s + var(--delay) * 0.2s) both;
-        position: relative;
-    }
-
-    .countdown-value {
-        font-size: 4.5rem;
-        font-weight: 800;
-        font-family: 'Orbitron', monospace;
-        background: linear-gradient(135deg, var(--text-white), var(--accent-orange));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 140px;
-        height: 140px;
-        margin-bottom: 1rem;
-        transition: var(--transition);
-    }
-
-    .countdown-value::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--glass-bg);
-        border: 3px solid var(--glass-border);
-        border-radius: 1.5rem;
-        backdrop-filter: blur(20px);
-        z-index: -1;
-        transform: rotateY(15deg) rotateX(5deg);
-        transition: var(--transition);
-        animation: floatBox 4s ease-in-out infinite;
-        animation-delay: calc(var(--delay) * 0.3s);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-
-    .countdown-value::after {
-        content: '';
-        position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        background: linear-gradient(45deg, var(--accent-orange), var(--accent-blue), var(--accent-purple), var(--accent-green));
-        background-size: 400% 400%;
-        border-radius: 1.5rem;
-        z-index: -2;
-        animation: gradientShift 3s ease-in-out infinite;
-        opacity: 0;
-        transition: var(--transition);
-    }
-
-    .countdown-item:hover .countdown-value::after {
-        opacity: 1;
-    }
-
-    .countdown-item:hover .countdown-value::before {
-        transform: rotateY(0deg) rotateX(0deg) scale(1.05);
-        border-color: var(--accent-orange);
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px var(--accent-orange-glow);
-    }
-
-    @keyframes floatBox {
-        0%, 100% { 
-            transform: rotateY(15deg) rotateX(5deg) translateY(0);
-        }
-        50% { 
-            transform: rotateY(15deg) rotateX(5deg) translateY(-15px);
-        }
-    }
-
-    .countdown-label {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        font-family: 'Orbitron', monospace;
-    }
-
-    .update-features {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 2.5rem;
-        margin-top: 5rem;
-        margin-bottom: 5rem;
-        width: 100%;
-        max-width: 1400px;
-    }
-
-    .feature-card {
-        background: var(--glass-bg);
-        border: 2px solid var(--glass-border);
-        border-radius: 2rem;
-        padding: 3rem 2.5rem;
-        text-align: center;
-        transition: var(--transition);
-        backdrop-filter: blur(20px);
-        animation: fadeInUp 1s ease-out calc(1s + var(--delay) * 0.3s) both;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .feature-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, var(--accent-orange), var(--accent-blue), var(--accent-purple));
-        transform: scaleX(0);
-        transition: transform 0.5s var(--elastic);
-    }
-
-    .feature-card:hover {
-        transform: translateY(-15px) scale(1.02);
-        border-color: var(--accent-orange);
-        box-shadow: 
-            0 25px 50px rgba(0, 0, 0, 0.4),
-            0 0 40px var(--accent-orange-glow);
-    }
-
-    .feature-card:hover::before {
-        transform: scaleX(1);
-    }
-
-    .feature-icon {
-        width: 5rem;
-        height: 5rem;
-        background: linear-gradient(135deg, var(--accent-orange), var(--accent-blue));
-        border-radius: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 2rem;
-        font-size: 2rem;
-        color: white;
-        transition: var(--transition);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .feature-icon::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        transition: left 0.5s;
-    }
-
-    .feature-card:hover .feature-icon {
-        transform: scale(1.15) rotate(10deg);
-        box-shadow: 0 15px 40px var(--accent-orange-glow);
-    }
-
-    .feature-card:hover .feature-icon::before {
-        left: 100%;
-    }
-
-    .feature-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-        font-family: 'Orbitron', monospace;
-        background: linear-gradient(135deg, var(--text-white), var(--accent-orange));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .feature-description {
-        color: var(--text-light);
-        font-size: 1rem;
-        line-height: 1.6;
-    }
-
-    .discord-community {
-        max-width: 800px;
-        margin: 0 auto;
-        animation: fadeInUp 1s ease-out 1.5s both;
-        width: 100%;
-        background: var(--glass-bg);
-        border: 2px solid var(--glass-border);
-        border-radius: 2rem;
-        padding: 4rem 3rem;
-        backdrop-filter: blur(20px);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .discord-community::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, var(--discord-purple), var(--accent-blue), var(--accent-purple));
-        animation: gradientShift 3s ease-in-out infinite;
-    }
-
-    .discord-title {
-        font-size: 2.5rem;
-        font-weight: 800;
-        margin-bottom: 1.5rem;
-        font-family: 'Orbitron', monospace;
-        background: linear-gradient(135deg, var(--text-white), var(--discord-purple));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-align: center;
-    }
-
-    .discord-description {
-        font-size: 1.25rem;
-        color: var(--text-light);
-        margin-bottom: 3rem;
-        text-align: center;
-        line-height: 1.6;
-    }
-
-    .discord-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 2rem;
-        margin-bottom: 3rem;
-    }
-
-    .stat-item {
-        text-align: center;
-        padding: 1.5rem;
-        background: rgba(88, 101, 242, 0.1);
-        border: 1px solid var(--discord-purple-glow);
-        border-radius: 1rem;
-        transition: var(--transition);
-    }
-
-    .stat-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px var(--discord-purple-glow);
-    }
-
-    .stat-number {
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: var(--discord-purple);
-        font-family: 'Orbitron', monospace;
-        display: block;
-        margin-bottom: 0.5rem;
-    }
-
-    .stat-label {
-        font-size: 1rem;
-        color: var(--text-light);
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-
-    .discord-buttons {
-        display: flex;
-        gap: 1.5rem;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .server-info {
-        margin-top: 2rem;
-        padding: 1.5rem;
-        background: rgba(255, 107, 0, 0.1);
-        border: 1px solid var(--accent-orange-glow);
-        border-radius: 1rem;
-        text-align: center;
-    }
-
-    .server-ip {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: var(--accent-orange);
-        background: rgba(255, 107, 0, 0.1);
-        padding: 0.75rem 1.5rem;
-        border-radius: 0.5rem;
-        display: inline-block;
-        margin-top: 1rem;
-        cursor: pointer;
-        transition: var(--transition);
-    }
-
-    .server-ip:hover {
-        background: rgba(255, 107, 0, 0.2);
-        transform: scale(1.05);
-    }
-
-    .timezone-notice {
-        margin-top: 2rem;
-        font-size: 1rem;
-        color: var(--text-muted);
-        font-style: italic;
-        text-align: center;
-        padding: 1rem 2rem;
-        background: var(--glass-bg);
-        border: 1px solid var(--glass-border);
-        border-radius: 1rem;
-        backdrop-filter: blur(10px);
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .footer {
-        margin-top: 4rem;
-        padding: 3rem 0;
-        text-align: center;
-        color: var(--text-muted);
-        font-size: 1rem;
-        border-top: 1px solid var(--glass-border);
-        width: 100%;
-    }
-
-    .footer a {
-        color: var(--accent-orange);
-        text-decoration: none;
-        transition: var(--transition);
-        font-weight: 600;
-    }
-
-    .footer a:hover {
-        color: var(--accent-orange-hover);
-        text-decoration: underline;
-    }
-
-    .geometric-shape {
-        position: absolute;
-        pointer-events: none;
-        opacity: 0.2;
-        z-index: -1;
-    }
-
-    .shape-1 {
-        top: 15%;
-        left: 8%;
-        width: 200px;
-        height: 200px;
-        background: linear-gradient(45deg, var(--accent-orange), var(--accent-blue));
-        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-        animation: shapeFloat1 20s ease-in-out infinite;
-        filter: blur(1px);
-    }
-
-    .shape-2 {
-        top: 60%;
-        right: 10%;
-        width: 150px;
-        height: 150px;
-        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-        border-radius: 50%;
-        animation: shapeFloat2 15s ease-in-out infinite reverse;
-        filter: blur(1px);
-    }
-
-    .shape-3 {
-        bottom: 15%;
-        left: 15%;
-        width: 120px;
-        height: 120px;
-        background: linear-gradient(90deg, var(--accent-purple), var(--accent-green));
-        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-        animation: shapeFloat1 25s ease-in-out infinite;
-        filter: blur(1px);
-    }
-
-    .shape-4 {
-        top: 40%;
-        right: 25%;
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(180deg, var(--accent-green), var(--accent-orange));
-        border-radius: 20%;
-        animation: shapeFloat2 18s ease-in-out infinite;
-        filter: blur(1px);
-    }
-
-    @keyframes shapeFloat1 {
-        0%, 100% { 
-            transform: translateY(0px) rotate(0deg) scale(1);
-        }
-        33% { 
-            transform: translateY(-30px) rotate(120deg) scale(1.1);
-        }
-        66% { 
-            transform: translateY(20px) rotate(240deg) scale(0.9);
-        }
-    }
-
-    @keyframes shapeFloat2 {
-        0%, 100% { 
-            transform: translateX(0px) scale(1) rotate(0deg);
-        }
-        50% { 
-            transform: translateX(30px) scale(1.2) rotate(180deg);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .countdown-timer {
-            gap: 1rem;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skyline SMP - Thank You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+            --secondary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%);
+            --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 50%, #ff9ff3 100%);
+            --accent-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --background-primary: #0a0a0f;
+            --background-secondary: #1a1a2e;
+            --background-tertiary: #16213e;
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #e8e8e8;
+            --text-muted: #b0b0b0;
+            --shadow-primary: 0 25px 50px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 60px rgba(102, 126, 234, 0.2);
+            --border-radius: 28px;
+            --sunset-orange: #ff7b54;
+            --sunset-pink: #ff6b9d;
+            --sunset-purple: #c44569;
+            --deep-blue: #1e3c72;
+            --night-blue: #2a5298;
+            --soft-white: #f8f9fa;
+            --warm-gray: #6c757d;
+            --dark-gray: #343a40;
+            --gold: #ffd700;
+            --silver: #c0c0c0;
         }
 
-        .countdown-item {
-            min-width: 100px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .countdown-value {
-            font-size: 3rem;
-            width: 100px;
-            height: 100px;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--night-blue) 50%, var(--sunset-purple) 100%);
+            color: var(--soft-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
         }
 
-        .update-features {
-            grid-template-columns: 1fr;
-            gap: 2rem;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                conic-gradient(from 0deg at 20% 30%, rgba(102, 126, 234, 0.1) 0deg, transparent 60deg),
+                conic-gradient(from 180deg at 80% 70%, rgba(255, 107, 107, 0.08) 0deg, transparent 60deg),
+                radial-gradient(circle at 50% 50%, rgba(118, 75, 162, 0.05) 0%, transparent 70%);
+            z-index: -2;
+            animation: backgroundPulse 15s ease-in-out infinite;
         }
 
-        .discord-buttons {
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .discord-stats {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        .geometric-shape {
-            display: none;
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
         }
 
         .container {
-            padding: 1rem;
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        .feature-card,
-        .discord-community {
-            padding: 2rem 1.5rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .countdown-value {
-            font-size: 2.5rem;
-            width: 80px;
-            height: 80px;
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        .countdown-item {
-            min-width: 80px;
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
         }
 
-        .countdown-timer {
-            gap: 0.5rem;
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
-    }
 
-    .loading-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--bg-dark);
-        z-index: 1000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        animation: fadeOut 1s ease-out 2s forwards;
-    }
+        .floating-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
 
-    .loading-spinner {
-        width: 80px;
-        height: 80px;
-        border: 4px solid var(--glass-border);
-        border-top: 4px solid var(--accent-orange);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes fadeOut {
-        to {
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(2px);
+            animation: floatOrb 30s infinite linear;
             opacity: 0;
-            visibility: hidden;
         }
-    }
-</style>
+
+        .orb:nth-child(1) { background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%); }
+        .orb:nth-child(2) { background: radial-gradient(circle, rgba(255, 107, 107, 0.12) 0%, transparent 70%); }
+        .orb:nth-child(3) { background: radial-gradient(circle, rgba(118, 75, 162, 0.1) 0%, transparent 70%); }
+        .orb:nth-child(4) { background: radial-gradient(circle, rgba(75, 192, 192, 0.08) 0%, transparent 70%); }
+
+        @keyframes floatOrb {
+            0% {
+                transform: translateY(100vh) translateX(-100px) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+                transform: translateY(95vh) translateX(-50px) rotate(18deg) scale(1);
+            }
+            95% {
+                opacity: 1;
+                transform: translateY(5vh) translateX(100px) rotate(342deg) scale(1);
+            }
+            100% {
+                transform: translateY(-5vh) translateX(150px) rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(255, 123, 84, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(255, 107, 157, 0.2) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .logo-container {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 12vw, 8rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--gold) 0%, var(--sunset-orange) 30%, var(--sunset-pink) 70%, var(--silver) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+            animation: logoShine 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        @keyframes logoShine {
+            0%, 100% { filter: brightness(1) drop-shadow(0 0 30px rgba(255, 215, 0, 0.3)); }
+            50% { filter: brightness(1.2) drop-shadow(0 0 50px rgba(255, 215, 0, 0.5)); }
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-weight: 300;
+            color: rgba(248, 249, 250, 0.8);
+            margin-bottom: 3rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .announcement-badge {
+            background: linear-gradient(135deg, var(--sunset-orange), var(--sunset-pink));
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 0 10px 30px rgba(255, 123, 84, 0.3);
+            animation: float 3s ease-in-out infinite;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(248, 249, 250, 0.6);
+            font-size: 0.9rem;
+            text-align: center;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .content-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            align-items: start;
+        }
+
+        .story-sidebar {
+            position: sticky;
+            top: 2rem;
+        }
+
+        .chapter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .chapter-subtitle {
+            font-size: 1.1rem;
+            color: rgba(248, 249, 250, 0.7);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .story-content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .message-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--soft-white);
+            margin-bottom: 2rem;
+        }
+
+        .reasons-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .reasons-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            padding-left: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .reasons-list li:hover {
+            padding-left: 2.5rem;
+            color: var(--gold);
+        }
+
+        .reasons-list li::before {
+            content: "★";
+            position: absolute;
+            left: 0;
+            color: var(--sunset-orange);
+            font-size: 1.2rem;
+        }
+
+        .stats-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255, 123, 84, 0.1), rgba(255, 107, 157, 0.1));
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+            z-index: -1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 123, 84, 0.2);
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: rgba(248, 249, 250, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .gratitude-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 25px;
+            padding: 4rem;
+            margin: 4rem 0;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .gratitude-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--sunset-orange), var(--gold), var(--sunset-pink));
+            border-radius: 25px 25px 0 0;
+        }
+
+        .gratitude-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 2rem;
+        }
+
+        .gratitude-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--soft-white);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .transformation-section {
+            background: linear-gradient(135deg, rgba(67, 233, 123, 0.1), rgba(79, 172, 254, 0.1));
+            border-radius: 25px;
+            padding: 4rem;
+            margin: 4rem 0;
+            text-align: center;
+            border: 1px solid rgba(67, 233, 123, 0.2);
+            position: relative;
+        }
+
+        .transformation-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary-gradient));
+            border-radius: 25px 25px 0 0;
+        }
+
+        .transformation-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+        }
+
+        .transformation-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--soft-white);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .transformation-badge {
+            display: inline-block;
+            background: var(--secondary-gradient);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            position: relative;
+            overflow: hidden;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .badge-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(67, 233, 123, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(67, 233, 123, 0.5); }
+        }
+
+        .farewell-section {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.3));
+        }
+
+        .farewell-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 500;
+            line-height: 1.6;
+            color: var(--soft-white);
+            max-width: 900px;
+            margin: 0 auto 2rem;
+        }
+
+        .heart {
+            color: var(--sunset-pink);
+            font-size: 1.5em;
+            animation: heartPulse 2s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        .signature {
+            font-size: 1.1rem;
+            color: rgba(248, 249, 250, 0.7);
+            font-style: italic;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            .story-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .story-sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 1rem;
+            }
+            
+            .content-section {
+                padding: 3rem 1rem;
+            }
+            
+            .story-content {
+                padding: 2rem;
+            }
+            
+            .gratitude-section {
+                padding: 2rem;
+            }
+            
+            .stats-showcase {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--sunset-orange), var(--sunset-pink));
+            border-radius: 4px;
+        }
+
+        /* Selection */
+        ::selection {
+            background: rgba(255, 215, 0, 0.3);
+            color: var(--soft-white);
+        }
+    </style>
 </head>
 <body>
-<div class="loading-overlay">
-    <div class="loading-spinner"></div>
-</div>
+    <div class="stars" id="stars"></div>
+    <div class="floating-orbs" id="orbs"></div>
 
-<div class="bg-animation"></div>
-<div class="grid-bg"></div>
-
-<div class="particles" id="particles"></div>
-
-<header class="header">
-    <div class="header-container">
-        <a href="index.html" class="logo">
-            <div class="logo-icon"></div>
-            <div class="logo-text">Skyline <span>SMP</span></div>
-        </a>
-        
-        <a href="https://discord.skylinesmp.net" class="btn btn-primary">Join Discord</a>
-    </div>
-</header>
-
-<section class="countdown-section">
-    <div class="geometric-shape shape-1"></div>
-    <div class="geometric-shape shape-2"></div>
-    <div class="geometric-shape shape-3"></div>
-    <div class="geometric-shape shape-4"></div>
-    
     <div class="container">
-        <div class="update-badge">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-            </svg>
-            Game-Changing Update Incoming
-        </div>
-        
-        <h1 class="countdown-title">EVOLUTION</h1>
-        
-        <p class="countdown-subtitle">
-            Prepare for the most revolutionary update in Skyline SMP history. Advanced anti-cheat protection, 
-            intense lifesteal mechanics, McMMO RPG skills, enhanced performance, and game-changing features 
-            that will redefine your Minecraft survival experience forever.
-        </p>
-        
-        <div class="countdown-timer" id="countdown">
-            <div class="countdown-item" style="--delay: 1;">
-                <div class="countdown-value" id="days">00</div>
-                <div class="countdown-label">Days</div>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="logo-container">
+                <h1 class="logo">Skyline SMP</h1>
             </div>
-            
-            <div class="countdown-item" style="--delay: 2;">
-                <div class="countdown-value" id="hours">00</div>
-                <div class="countdown-label">Hours</div>
+            <p class="subtitle">A Journey That Touched the Sky</p>
+            <div class="announcement-badge">Server Transforming</div>
+            <div class="scroll-indicator">
+                <div>Scroll to read our story</div>
+                <div style="margin-top: 0.5rem;">↓</div>
             </div>
-            
-            <div class="countdown-item" style="--delay: 3;">
-                <div class="countdown-value" id="minutes">00</div>
-                <div class="countdown-label">Minutes</div>
-            </div>
-            
-            <div class="countdown-item" style="--delay: 4;">
-                <div class="countdown-value" id="seconds">00</div>
-                <div class="countdown-label">Seconds</div>
-            </div>
-        </div>
-        
-        <div class="timezone-notice">
-            🌍 Release time: June 16th, 2025 at <span id="localTime">20:00</span> 
-            (<span id="userTimezone">your local time</span>)
-        </div>
-        
-        <div class="update-features">
-            <div class="feature-card" style="--delay: 1;">
-                <div class="feature-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                    </svg>
+        </section>
+
+        <!-- Content Section -->
+        <section class="content-section">
+            <div class="story-grid">
+                <div class="story-sidebar">
+                    <h2 class="chapter-title">The Final Chapter</h2>
+                    <p class="chapter-subtitle">
+                        Every great adventure must come to an end, but the memories we've created together will last forever.
+                    </p>
                 </div>
-                <h3 class="feature-title">Advanced Anti-Cheat</h3>
-                <p class="feature-description">
-                    State-of-the-art protection system that ensures fair gameplay for everyone. 
-                    Advanced detection algorithms and real-time monitoring keep cheaters out.
+                
+                <div class="story-content">
+                    <p class="message-text">
+                        After careful consideration, we have made the difficult decision to discontinue Skyline SMP in its current form. 
+                        This wasn't an easy choice, but due to declining player interest and financial constraints, 
+                        we can no longer maintain the server at the quality our community deserves. However, this isn't the end of our journey together - Skyline SMP will be transforming into something new and exciting!
+                    </p>
+                    
+                    <h3 style="color: var(--sunset-orange); margin: 2rem 0 1rem; font-size: 1.4rem;">Why We're Closing</h3>
+                    <ul class="reasons-list">
+                        <li>Decreased player activity and engagement</li>
+                        <li>Rising operational costs and server maintenance</li>
+                        <li>Limited resources to implement new features</li>
+                        <li>Focus shift to other projects and commitments</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Stats Showcase -->
+            <div class="stats-showcase">
+                <div class="stat-card">
+                    <span class="stat-number">~1</span>
+                    <span class="stat-label">Year Running</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Players Joined</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">Memories Made</span>
+                </div>
+            </div>
+
+            <!-- Gratitude Section -->
+            <div class="gratitude-section">
+                <h2 class="gratitude-title">Thank You, Community</h2>
+                <p class="gratitude-text">
+                    To every player who logged in, built amazing structures, participated in events, 
+                    and made Skyline SMP feel like home - thank you. Your creativity, friendship, 
+                    and dedication made this server special. The builds you created, the friendships 
+                    you formed, and the memories we shared will always be cherished.
                 </p>
             </div>
-            
-            <div class="feature-card" style="--delay: 2;">
-                <div class="feature-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                    </svg>
-                </div>
-                <h3 class="feature-title">Lifesteal Mechanics</h3>
-                <p class="feature-description">
-                    Intense PvP combat where every hit matters. Steal hearts from your enemies 
-                    and lose them when defeated. High-stakes survival like never before.
+
+            <!-- Transformation Section -->
+            <div class="transformation-section">
+                <h2 class="transformation-title">A New Beginning</h2>
+                <p class="transformation-text">
+                    While Skyline SMP as you know it is coming to an end, we're excited to announce that this is not goodbye forever. 
+                    The server will be transforming into something new and different - a fresh adventure that builds upon everything 
+                    we've learned from our time together. Stay tuned for announcements about what's coming next!
                 </p>
-            </div>
-            
-            <div class="feature-card" style="--delay: 3;">
-                <div class="feature-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                    </svg>
+                <div class="transformation-badge">
+                    <span>Coming Soon</span>
+                    <div class="badge-glow"></div>
                 </div>
-                <h3 class="feature-title">Advanced Commands</h3>
-                <p class="feature-description">
-                    Powerful new player commands for enhanced gameplay. Teleportation, home management, 
-                    and quality-of-life improvements that streamline your survival experience.
-                </p>
             </div>
-            
-            <div class="feature-card" style="--delay: 4;">
-                <div class="feature-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
-                    </svg>
-                </div>
-                <h3 class="feature-title">Enhanced Events</h3>
-                <p class="feature-description">
-                    Dynamic server events with exclusive rewards, seasonal celebrations, 
-                    and community challenges that bring players together.
-                </p>
-            </div>
-            
-            <div class="feature-card" style="--delay: 5;">
-                <div class="feature-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                </div>
-                <h3 class="feature-title">Performance Boost</h3>
-                <p class="feature-description">
-                    Optimized server performance with reduced lag, faster chunk loading, 
-                    and improved stability for the smoothest gameplay experience.
-                </p>
-            </div>
-            
-            <div class="feature-card" style="--delay: 6;">
-                <div class="feature-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                    </svg>
-                </div>
-                <h3 class="feature-title">McMMO Skills</h3>
-                <p class="feature-description">
-                    Level up 12+ RPG skills through gameplay. Mining, Combat, Woodcutting, and more. 
-                    Unlock special abilities and become the ultimate survivor with progression that matters.
-                </p>
-            </div>
-        </div>
-        
-        <div class="discord-community">
-            <h3 class="discord-title">Join Our Thriving Community</h3>
-            <p class="discord-description">
-                Connect with 400+ active players, get exclusive updates, participate in events, 
-                and be the first to experience the EVOLUTION update when it launches!
+        </section>
+
+        <!-- Farewell Section -->
+        <section class="farewell-section">
+            <p class="farewell-text">
+                It has been an absolute pleasure to pursue Skyline and witness the incredible 
+                community that formed around it. While this chapter closes, a new one is about to begin. 
+                The memories and friendships will live on forever, and we can't wait to embark on this 
+                new adventure together. <span class="heart">♥</span>
             </p>
-            
-            <div class="discord-stats">
-                <div class="stat-item">
-                    <span class="stat-number">400+</span>
-                    <span class="stat-label">Active Players</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">24/7</span>
-                    <span class="stat-label">Server Uptime</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">2024</span>
-                    <span class="stat-label">Established</span>
-                </div>
-            </div>
-            
-            <div class="discord-buttons">
-                <a href="https://discord.skylinesmp.net" class="btn btn-discord">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem;">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                    Join Discord
-                </a>
-                <a href="index.html" class="btn btn-secondary">Explore Server</a>
-            </div>
-            
-            <div class="server-info">
-                <p style="margin-bottom: 0.5rem; color: var(--text-light);">Ready to play? Connect with:</p>
-                <div class="server-ip" onclick="copyToClipboard('skylinesmp.net')" title="Click to copy">
-                    mc.skylinesmp.net
-                </div>
-            </div>
-        </div>
+            <p class="signature">— The Skyline SMP Team</p>
+        </section>
     </div>
-</section>
 
-<footer class="footer">
-    <p>&copy; 2025 Skyline SMP. All rights reserved. <a href="index.html">Return to Home</a></p>
-</footer>
-
-<script>
-    function createParticles() {
-        const particlesContainer = document.getElementById('particles');
-        const particleCount = 80;
-        const colors = ['orange', 'blue', 'purple', 'green'];
-        
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            const size = Math.random() * 6 + 2;
+    <script>
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 150;
             
-            particle.className = `particle ${color}`;
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.width = size + 'px';
-            particle.style.height = size + 'px';
-            particle.style.animationDelay = Math.random() * 15 + 's';
-            particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-            
-            particlesContainer.appendChild(particle);
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                
+                starsContainer.appendChild(star);
+            }
         }
-    }
 
-    function updateCountdown() {
-        const targetDate = new Date('2025-06-16T20:00:00+02:00');
-        const now = new Date();
-        const diff = targetDate - now;
-        
-        if (diff <= 0) {
-            document.getElementById('days').textContent = '00';
-            document.getElementById('hours').textContent = '00';
-            document.getElementById('minutes').textContent = '00';
-            document.getElementById('seconds').textContent = '00';
+        function createOrb() {
+            const orb = document.createElement('div');
+            orb.className = 'orb';
             
-            document.querySelector('.countdown-subtitle').innerHTML = 
-                '🎉 <strong>The EVOLUTION update is now LIVE!</strong> Join the server to experience the revolution! 🎉';
+            const size = Math.random() * 200 + 100;
+            const startX = Math.random() * (window.innerWidth + 200) - 100;
+            const opacity = Math.random() * 0.4 + 0.1;
+            const hue = Math.random() * 60 + 200;
             
-            document.body.style.animation = 'celebration 2s ease-in-out infinite';
+            orb.style.width = size + 'px';
+            orb.style.height = size + 'px';
+            orb.style.left = startX + 'px';
+            orb.style.opacity = opacity;
+            orb.style.background = `radial-gradient(circle, hsla(${hue}, 70%, 60%, 0.15) 0%, transparent 70%)`;
+            orb.style.animationDuration = (Math.random() * 25 + 20) + 's';
+            orb.style.animationDelay = Math.random() * 10 + 's';
             
-            return;
-        }
-        
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        
-        animateNumberChange('days', days);
-        animateNumberChange('hours', hours);
-        animateNumberChange('minutes', minutes);
-        animateNumberChange('seconds', seconds);
-    }
-
-    function animateNumberChange(id, newValue) {
-        const element = document.getElementById(id);
-        const currentValue = element.textContent;
-        const newValueStr = newValue.toString().padStart(2, '0');
-        
-        if (currentValue !== newValueStr) {
-            element.style.transform = 'scale(1.1)';
-            element.style.color = 'var(--accent-orange)';
+            document.getElementById('orbs').appendChild(orb);
             
             setTimeout(() => {
-                element.textContent = newValueStr;
-                element.style.transform = 'scale(1)';
-                element.style.color = '';
-            }, 150);
+                if (orb.parentNode) {
+                    orb.remove();
+                }
+            }, 35000);
         }
-    }
 
-    function displayLocalTime() {
-        const targetDate = new Date('2025-06-16T20:00:00+02:00');
-        
-        const options = { 
-            hour: 'numeric', 
-            minute: 'numeric',
-            hour12: true
+        setInterval(createOrb, 1200);
+
+        for (let i = 0; i < 8; i++) {
+            setTimeout(createOrb, i * 300);
+        }
+
+        document.querySelector('.scroll-indicator').addEventListener('click', () => {
+            document.querySelector('.content-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroSection = document.querySelector('.hero-section');
+            const rate = scrolled * -0.5;
+            
+            heroSection.style.transform = `translateY(${rate}px)`;
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         };
-        
-        const localTimeStr = targetDate.toLocaleTimeString(undefined, options);
-        document.getElementById('localTime').textContent = localTimeStr;
-        
-        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        document.getElementById('userTimezone').textContent = timeZone;
-    }
 
-    function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            const serverIp = document.querySelector('.server-ip');
-            const originalText = serverIp.textContent;
-            serverIp.textContent = 'Copied!';
-            serverIp.style.background = 'var(--accent-green-glow)';
-            
-            setTimeout(() => {
-                serverIp.textContent = originalText;
-                serverIp.style.background = 'rgba(255, 107, 0, 0.1)';
-            }, 2000);
-        });
-    }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
 
-    document.addEventListener('mousemove', (e) => {
-        const shapes = document.querySelectorAll('.geometric-shape');
-        const x = e.clientX / window.innerWidth;
-        const y = e.clientY / window.innerHeight;
-        
-        shapes.forEach((shape, index) => {
-            const speed = 40 + (index * 15);
-            const xOffset = (x - 0.5) * speed;
-            const yOffset = (y - 0.5) * speed;
-            const rotation = (x - 0.5) * 20;
+        window.addEventListener('load', () => {
+            createStars();
             
-            shape.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${rotation}deg)`;
+            const animatedElements = document.querySelectorAll('.stat-card, .story-content, .gratitude-section');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.8s ease-out';
+                observer.observe(el);
+            });
         });
 
-        const countdownItems = document.querySelectorAll('.countdown-item');
-        countdownItems.forEach((item, index) => {
-            const speed = 5 + (index * 2);
-            const xOffset = (x - 0.5) * speed;
-            const yOffset = (y - 0.5) * speed;
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
             
-            item.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index % 3 === 0) {
+                    const speed = 0.5;
+                    const x = (mouseX - 0.5) * speed;
+                    const y = (mouseY - 0.5) * speed;
+                    star.style.transform = `translate(${x}px, ${y}px)`;
+                }
+            });
         });
-    });
-
-    createParticles();
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-    displayLocalTime();
-
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
-        
-        document.querySelector('.bg-animation').style.transform = `translateY(${rate}px)`;
-    });
-
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes celebration {
-            0%, 100% { filter: hue-rotate(0deg); }
-            25% { filter: hue-rotate(90deg); }
-            50% { filter: hue-rotate(180deg); }
-            75% { filter: hue-rotate(270deg); }
-        }
-    `;
-    document.head.appendChild(style);
 </script>
 </body>
 </html>
