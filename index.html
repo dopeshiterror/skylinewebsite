@@ -1,770 +1,906 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skyline SMP - Thank You</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
-            --secondary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%);
-            --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 50%, #ff9ff3 100%);
-            --accent-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            --background-primary: #0a0a0f;
-            --background-secondary: #1a1a2e;
-            --background-tertiary: #16213e;
-            --glass-bg: rgba(255, 255, 255, 0.02);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --text-primary: #ffffff;
-            --text-secondary: #e8e8e8;
-            --text-muted: #b0b0b0;
-            --shadow-primary: 0 25px 50px rgba(0, 0, 0, 0.5);
-            --shadow-glow: 0 0 60px rgba(102, 126, 234, 0.2);
-            --border-radius: 28px;
-            --sunset-orange: #ff7b54;
-            --sunset-pink: #ff6b9d;
-            --sunset-purple: #c44569;
-            --deep-blue: #1e3c72;
-            --night-blue: #2a5298;
-            --soft-white: #f8f9fa;
-            --warm-gray: #6c757d;
-            --dark-gray: #343a40;
-            --gold: #ffd700;
-            --silver: #c0c0c0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skyline SMP: Reborn</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+        --secondary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%);
+        --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 50%, #ff9ff3 100%);
+        --accent-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        --background-primary: #0a0a0f;
+        --background-secondary: #1a1a2e;
+        --background-tertiary: #16213e;
+        --glass-bg: rgba(255, 255, 255, 0.03); /* Slightly more opaque */
+        --glass-border: rgba(255, 255, 255, 0.15); /* Stronger border */
+        --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+        --text-primary: #ffffff;
+        --text-secondary: #e8e8e8;
+        --text-muted: #b0b0b0;
+        --shadow-primary: 0 25px 50px rgba(0, 0, 0, 0.5);
+        --shadow-glow: 0 0 60px rgba(102, 126, 234, 0.2);
+        --border-radius: 28px;
+        --sunset-orange: #ff7b54;
+        --sunset-pink: #ff6b9d;
+        --sunset-purple: #c44569;
+        --deep-blue: #1e3c72;
+        --night-blue: #2a5298;
+        --soft-white: #f8f9fa;
+        --warm-gray: #6c757d;
+        --dark-gray: #343a40;
+        --gold: #ffd700;
+        --silver: #c0c0c0;
+        --reborn-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%); /* For Reborn elements */
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--night-blue) 50%, var(--sunset-purple) 100%);
-            color: var(--soft-white);
-            overflow-x: hidden;
-            line-height: 1.6;
-            min-height: 100vh;
-        }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, var(--deep-blue) 0%, var(--night-blue) 50%, var(--sunset-purple) 100%);
+        color: var(--soft-white);
+        overflow-x: hidden;
+        line-height: 1.6;
+        min-height: 100vh;
+    }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                conic-gradient(from 0deg at 20% 30%, rgba(102, 126, 234, 0.1) 0deg, transparent 60deg),
-                conic-gradient(from 180deg at 80% 70%, rgba(255, 107, 107, 0.08) 0deg, transparent 60deg),
-                radial-gradient(circle at 50% 50%, rgba(118, 75, 162, 0.05) 0%, transparent 70%);
-            z-index: -2;
-            animation: backgroundPulse 15s ease-in-out infinite;
-        }
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            conic-gradient(from 0deg at 20% 30%, rgba(102, 126, 234, 0.1) 0deg, transparent 60deg),
+            conic-gradient(from 180deg at 80% 70%, rgba(255, 107, 107, 0.08) 0deg, transparent 60deg),
+            radial-gradient(circle at 50% 50%, rgba(118, 75, 162, 0.05) 0%, transparent 70%);
+        z-index: -2;
+        animation: backgroundPulse 15s ease-in-out infinite;
+    }
 
-        @keyframes backgroundPulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.05); }
-        }
+    @keyframes backgroundPulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.05); }
+    }
 
-        .container {
-            position: relative;
-            z-index: 10;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    .container {
+        position: relative;
+        z-index: 10;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
 
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
+    .stars {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
 
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s ease-in-out infinite;
-        }
+    .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        animation: twinkle 3s ease-in-out infinite;
+    }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
+    @keyframes twinkle {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.2); }
+    }
 
-        .floating-orbs {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none;
-        }
+    .floating-orbs {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+    }
 
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(2px);
-            animation: floatOrb 30s infinite linear;
+    .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(2px);
+        animation: floatOrb 30s infinite linear;
+        opacity: 0;
+    }
+
+    .orb:nth-child(1) { background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%); }
+    .orb:nth-child(2) { background: radial-gradient(circle, rgba(255, 107, 107, 0.12) 0%, transparent 70%); }
+    .orb:nth-child(3) { background: radial-gradient(circle, rgba(118, 75, 162, 0.1) 0%, transparent 70%); }
+    .orb:nth-child(4) { background: radial-gradient(circle, rgba(75, 192, 192, 0.08) 0%, transparent 70%); }
+
+    @keyframes floatOrb {
+        0% {
+            transform: translateY(100vh) translateX(-100px) rotate(0deg) scale(0);
             opacity: 0;
         }
-
-        .orb:nth-child(1) { background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%); }
-        .orb:nth-child(2) { background: radial-gradient(circle, rgba(255, 107, 107, 0.12) 0%, transparent 70%); }
-        .orb:nth-child(3) { background: radial-gradient(circle, rgba(118, 75, 162, 0.1) 0%, transparent 70%); }
-        .orb:nth-child(4) { background: radial-gradient(circle, rgba(75, 192, 192, 0.08) 0%, transparent 70%); }
-
-        @keyframes floatOrb {
-            0% {
-                transform: translateY(100vh) translateX(-100px) rotate(0deg) scale(0);
-                opacity: 0;
-            }
-            5% {
-                opacity: 1;
-                transform: translateY(95vh) translateX(-50px) rotate(18deg) scale(1);
-            }
-            95% {
-                opacity: 1;
-                transform: translateY(5vh) translateX(100px) rotate(342deg) scale(1);
-            }
-            100% {
-                transform: translateY(-5vh) translateX(150px) rotate(360deg) scale(0);
-                opacity: 0;
-            }
+        5% {
+            opacity: 1;
+            transform: translateY(95vh) translateX(-50px) rotate(18deg) scale(1);
         }
-
-        .hero-section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            padding: 2rem;
+        95% {
+            opacity: 1;
+            transform: translateY(5vh) translateX(100px) rotate(342deg) scale(1);
         }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 30% 20%, rgba(255, 123, 84, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 70% 80%, rgba(255, 107, 157, 0.2) 0%, transparent 50%);
-            z-index: -1;
+        100% {
+            transform: translateY(-5vh) translateX(150px) rotate(360deg) scale(0);
+            opacity: 0;
         }
+    }
 
-        .logo-container {
-            position: relative;
-            margin-bottom: 2rem;
-        }
+    .hero-section {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        padding: 2rem;
+    }
 
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 12vw, 8rem);
-            font-weight: 900;
-            background: linear-gradient(45deg, var(--gold) 0%, var(--sunset-orange) 30%, var(--sunset-pink) 70%, var(--silver) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.02em;
-            line-height: 0.9;
-            animation: logoShine 4s ease-in-out infinite;
-            position: relative;
-        }
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 30% 20%, rgba(255, 123, 84, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 70% 80%, rgba(255, 107, 157, 0.2) 0%, transparent 50%);
+        z-index: -1;
+    }
 
-        @keyframes logoShine {
-            0%, 100% { filter: brightness(1) drop-shadow(0 0 30px rgba(255, 215, 0, 0.3)); }
-            50% { filter: brightness(1.2) drop-shadow(0 0 50px rgba(255, 215, 0, 0.5)); }
-        }
+    .logo-container {
+        position: relative;
+        margin-bottom: 2rem;
+    }
 
-        .subtitle {
-            font-size: clamp(1.2rem, 4vw, 2rem);
-            font-weight: 300;
-            color: rgba(248, 249, 250, 0.8);
-            margin-bottom: 3rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
+    .logo {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(3rem, 12vw, 8rem);
+        font-weight: 900;
+        background: linear-gradient(45deg, var(--gold) 0%, var(--sunset-orange) 30%, var(--sunset-pink) 70%, var(--silver) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.02em;
+        line-height: 0.9;
+        animation: logoShine 4s ease-in-out infinite;
+        position: relative;
+    }
 
-        .announcement-badge {
-            background: linear-gradient(135deg, var(--sunset-orange), var(--sunset-pink));
-            padding: 1rem 3rem;
-            border-radius: 50px;
-            font-size: clamp(1rem, 3vw, 1.4rem);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            box-shadow: 0 10px 30px rgba(255, 123, 84, 0.3);
-            animation: float 3s ease-in-out infinite;
-            margin-bottom: 2rem;
-        }
+    @keyframes logoShine {
+        0%, 100% { filter: brightness(1) drop-shadow(0 0 30px rgba(255, 215, 0, 0.3)); }
+        50% { filter: brightness(1.2) drop-shadow(0 0 50px rgba(255, 215, 0, 0.5)); }
+    }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
+    .subtitle {
+        font-size: clamp(1.2rem, 4vw, 2rem);
+        font-weight: 300;
+        color: rgba(248, 249, 250, 0.8);
+        margin-bottom: 3rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
 
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(248, 249, 250, 0.6);
-            font-size: 0.9rem;
-            text-align: center;
-            animation: bounce 2s infinite;
-        }
+    .announcement-badge {
+        background: linear-gradient(135deg, var(--sunset-orange), var(--sunset-pink));
+        padding: 1rem 3rem;
+        border-radius: 50px;
+        font-size: clamp(1rem, 3vw, 1.4rem);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        box-shadow: 0 10px 30px rgba(255, 123, 84, 0.3);
+        animation: float 3s ease-in-out infinite;
+        margin-bottom: 2rem;
+    }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
 
-        .content-section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
+    .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        color: rgba(248, 249, 250, 0.6);
+        font-size: 0.9rem;
+        text-align: center;
+        animation: bounce 2s infinite;
+    }
 
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+        40% { transform: translateX(-50%) translateY(-10px); }
+        60% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    .content-section {
+        padding: 5rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .story-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 4rem;
+        margin-bottom: 5rem;
+        align-items: start;
+    }
+
+    .story-sidebar {
+        position: sticky;
+        top: 2rem;
+    }
+
+    .chapter-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 700;
+        color: var(--gold);
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    .chapter-subtitle {
+        font-size: 1.1rem;
+        color: rgba(248, 249, 250, 0.7);
+        font-weight: 300;
+        line-height: 1.6;
+    }
+
+    .story-content {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px); /* Increased blur */
+        border-radius: 20px;
+        padding: 3rem;
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-shadow);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .story-content:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.2);
+    }
+
+    .message-text {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: var(--soft-white);
+        margin-bottom: 2rem;
+    }
+
+    .feature-list { /* Renamed from reasons-list */
+        list-style: none;
+        margin: 2rem 0;
+    }
+
+    .feature-list li {
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        padding-left: 2.5rem; /* Increased padding for icon */
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+    }
+
+    .feature-list li:last-child {
+        border-bottom: none;
+    }
+
+    .feature-list li:hover {
+        padding-left: 3rem;
+        color: var(--gold);
+    }
+
+    .feature-list li::before {
+        content: "✓"; /* Checkmark icon */
+        position: absolute;
+        left: 0;
+        color: var(--reborn-gradient); /* Greenish gradient for new features */
+        font-size: 1.4rem;
+        font-weight: bold;
+        line-height: 1;
+    }
+
+    .stats-showcase {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin: 4rem 0;
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, rgba(255, 123, 84, 0.1), rgba(255, 107, 157, 0.1));
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+        animation: rotate 10s linear infinite;
+        z-index: -1;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 20px 40px rgba(255, 123, 84, 0.2);
+    }
+
+    .stat-number {
+        font-family: 'Playfair Display', serif;
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--gold);
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 1rem;
+        color: rgba(248, 249, 250, 0.8);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    .gratitude-section {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border-radius: 25px;
+        padding: 4rem;
+        margin: 4rem auto; /* Center it */
+        text-align: center;
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-shadow);
+        position: relative;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gratitude-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+
+    .gratitude-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--sunset-orange), var(--gold), var(--sunset-pink));
+        border-radius: 25px 25px 0 0;
+    }
+
+    .gratitude-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 700;
+        color: var(--gold);
+        margin-bottom: 2rem;
+    }
+
+    .gratitude-text {
+        font-size: 1.3rem;
+        line-height: 1.8;
+        color: var(--soft-white);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .join-us-section { /* Renamed from future-section */
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border-radius: 25px;
+        padding: 4rem;
+        margin: 4rem auto; /* Center it */
+        text-align: center;
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-shadow);
+        position: relative;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .join-us-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(67, 233, 123, 0.2);
+    }
+
+    .join-us-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--reborn-gradient);
+        border-radius: 25px 25px 0 0;
+    }
+
+    .join-us-title { /* Renamed from future-title */
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 700;
+        background: var(--reborn-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 2rem;
+    }
+
+    .join-us-text { /* Renamed from future-text */
+        font-size: 1.3rem;
+        line-height: 1.8;
+        color: var(--soft-white);
+        max-width: 800px;
+        margin: 0 auto 3rem;
+    }
+
+    .discord-button { /* Renamed from future-badge */
+        display: inline-block;
+        background: var(--reborn-gradient);
+        padding: 1.2rem 3.5rem; /* Larger padding */
+        border-radius: 50px;
+        font-size: 1.2rem; /* Larger font */
+        font-weight: 700; /* Bolder */
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        position: relative;
+        overflow: hidden;
+        animation: pulse 2s ease-in-out infinite;
+        text-decoration: none; /* Ensure it's a link */
+        color: var(--soft-white); /* Text color */
+        box-shadow: 0 0 20px rgba(67, 233, 123, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .discord-button:hover {
+        transform: scale(1.05) translateY(-5px);
+        box-shadow: 0 0 30px rgba(67, 233, 123, 0.5), 0 0 50px rgba(0, 242, 254, 0.4);
+    }
+
+    .badge-glow {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        animation: rotate 3s linear infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(67, 233, 123, 0.3); }
+        50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(67, 233, 123, 0.5); }
+    }
+
+    .final-message-section { /* Renamed from farewell-section */
+        text-align: center;
+        padding: 5rem 2rem;
+        background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.3));
+    }
+
+    .final-message-text { /* Renamed from farewell-text */
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        font-weight: 500;
+        line-height: 1.6;
+        color: var(--soft-white);
+        max-width: 900px;
+        margin: 0 auto 2rem;
+    }
+
+    .heart {
+        color: var(--sunset-pink);
+        font-size: 1.5em;
+        animation: heartPulse 2s ease-in-out infinite;
+        display: inline-block;
+    }
+
+    @keyframes heartPulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.3); }
+    }
+
+    .signature {
+        font-size: 1.1rem;
+        color: rgba(248, 249, 250, 0.7);
+        font-style: italic;
+        margin-top: 3rem;
+    }
+
+    /* New: Founders Section Styling */
+    .founders-section {
+        padding: 5rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+        text-align: center;
+    }
+
+    .founders-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 3rem;
+        margin-top: 4rem;
+    }
+
+    .founder-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border-radius: 20px;
+        padding: 2.5rem;
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-shadow);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .founder-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.08), transparent);
+        animation: rotate 15s linear infinite;
+        z-index: -1;
+    }
+
+    .founder-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 215, 0, 0.2);
+    }
+
+    .founder-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--sunset-orange), var(--sunset-pink));
+        margin: 0 auto 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--soft-white);
+        border: 3px solid var(--gold);
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    }
+
+    .founder-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--gold);
+        margin-bottom: 0.5rem;
+    }
+
+    .founder-role {
+        font-size: 1rem;
+        color: rgba(248, 249, 250, 0.7);
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .founder-bio {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
         .story-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 4rem;
-            margin-bottom: 5rem;
-            align-items: start;
-        }
-
-        .story-sidebar {
-            position: sticky;
-            top: 2rem;
-        }
-
-        .chapter-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .chapter-subtitle {
-            font-size: 1.1rem;
-            color: rgba(248, 249, 250, 0.7);
-            font-weight: 300;
-            line-height: 1.6;
-        }
-
-        .story-content {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 3rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .message-text {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: var(--soft-white);
-            margin-bottom: 2rem;
-        }
-
-        .reasons-list {
-            list-style: none;
-            margin: 2rem 0;
-        }
-
-        .reasons-list li {
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            padding-left: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .reasons-list li:hover {
-            padding-left: 2.5rem;
-            color: var(--gold);
-        }
-
-        .reasons-list li::before {
-            content: "★";
-            position: absolute;
-            left: 0;
-            color: var(--sunset-orange);
-            font-size: 1.2rem;
-        }
-
-        .stats-showcase {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: 1fr;
             gap: 2rem;
-            margin: 4rem 0;
         }
+        
+        .story-sidebar {
+            position: static;
+        }
+    }
 
-        .stat-card {
-            background: linear-gradient(135deg, rgba(255, 123, 84, 0.1), rgba(255, 107, 157, 0.1));
-            border-radius: 15px;
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 1rem;
+        }
+        
+        .content-section, .founders-section {
+            padding: 3rem 1rem;
+        }
+        
+        .story-content, .founder-card {
             padding: 2rem;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
         }
+        
+        .gratitude-section, .join-us-section {
+            padding: 2rem;
+        }
+        
+        .stats-showcase, .founders-grid {
+            grid-template-columns: 1fr;
+        }
+    }
 
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.1), transparent);
-            animation: rotate 10s linear infinite;
-            z-index: -1;
-        }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
 
-        .stat-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(255, 123, 84, 0.2);
-        }
+    ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+    }
 
-        .stat-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--gold);
-            display: block;
-            margin-bottom: 0.5rem;
-        }
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, var(--sunset-orange), var(--sunset-pink));
+        border-radius: 4px;
+    }
 
-        .stat-label {
-            font-size: 1rem;
-            color: rgba(248, 249, 250, 0.8);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .gratitude-section {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-            border-radius: 25px;
-            padding: 4rem;
-            margin: 4rem 0;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-        }
-
-        .gratitude-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--sunset-orange), var(--gold), var(--sunset-pink));
-            border-radius: 25px 25px 0 0;
-        }
-
-        .gratitude-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 2rem;
-        }
-
-        .gratitude-text {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            color: var(--soft-white);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .transformation-section {
-            background: linear-gradient(135deg, rgba(67, 233, 123, 0.1), rgba(79, 172, 254, 0.1));
-            border-radius: 25px;
-            padding: 4rem;
-            margin: 4rem 0;
-            text-align: center;
-            border: 1px solid rgba(67, 233, 123, 0.2);
-            position: relative;
-        }
-
-        .transformation-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--secondary-gradient));
-            border-radius: 25px 25px 0 0;
-        }
-
-        .transformation-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
-            background: var(--secondary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 2rem;
-        }
-
-        .transformation-text {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            color: var(--soft-white);
-            max-width: 800px;
-            margin: 0 auto 3rem;
-        }
-
-        .transformation-badge {
-            display: inline-block;
-            background: var(--secondary-gradient);
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            position: relative;
-            overflow: hidden;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .badge-glow {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            animation: rotate 3s linear infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(67, 233, 123, 0.3); }
-            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(67, 233, 123, 0.5); }
-        }
-
-        .farewell-section {
-            text-align: center;
-            padding: 5rem 2rem;
-            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.3));
-        }
-
-        .farewell-text {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 500;
-            line-height: 1.6;
-            color: var(--soft-white);
-            max-width: 900px;
-            margin: 0 auto 2rem;
-        }
-
-        .heart {
-            color: var(--sunset-pink);
-            font-size: 1.5em;
-            animation: heartPulse 2s ease-in-out infinite;
-            display: inline-block;
-        }
-
-        @keyframes heartPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.3); }
-        }
-
-        .signature {
-            font-size: 1.1rem;
-            color: rgba(248, 249, 250, 0.7);
-            font-style: italic;
-            margin-top: 3rem;
-        }
-
-        @media (max-width: 1024px) {
-            .story-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .story-sidebar {
-                position: static;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-section {
-                padding: 1rem;
-            }
-            
-            .content-section {
-                padding: 3rem 1rem;
-            }
-            
-            .story-content {
-                padding: 2rem;
-            }
-            
-            .gratitude-section {
-                padding: 2rem;
-            }
-            
-            .stats-showcase {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, var(--sunset-orange), var(--sunset-pink));
-            border-radius: 4px;
-        }
-
-        /* Selection */
-        ::selection {
-            background: rgba(255, 215, 0, 0.3);
-            color: var(--soft-white);
-        }
-    </style>
+    /* Selection */
+    ::selection {
+        background: rgba(255, 215, 0, 0.3);
+        color: var(--soft-white);
+    }
+</style>
 </head>
 <body>
-    <div class="stars" id="stars"></div>
-    <div class="floating-orbs" id="orbs"></div>
+<div class="stars" id="stars"></div>
+<div class="floating-orbs" id="orbs"></div>
 
-    <div class="container">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="logo-container">
-                <h1 class="logo">Skyline SMP</h1>
-            </div>
-            <p class="subtitle">A Journey That Touched the Sky</p>
-            <div class="announcement-badge">Server Transforming</div>
-            <div class="scroll-indicator">
-                <div>Scroll to read our story</div>
-                <div style="margin-top: 0.5rem;">↓</div>
-            </div>
-        </section>
+<div class="container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="logo-container">
+            <h1 class="logo">Skyline SMP</h1>
+        </div>
+        <p class="subtitle">A journey that will touch the sky</p>
+        <div class="announcement-badge">Relaunch Confirmed!</div>
+        <div class="scroll-indicator">
+            <div>Scroll to discover our new beginning</div>
+            <div style="margin-top: 0.5rem;">↓</div>
+        </div>
+    </section>
 
-        <!-- Content Section -->
-        <section class="content-section">
-            <div class="story-grid">
-                <div class="story-sidebar">
-                    <h2 class="chapter-title">The Final Chapter</h2>
-                    <p class="chapter-subtitle">
-                        Every great adventure must come to an end, but the memories we've created together will last forever.
-                    </p>
-                </div>
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="story-grid">
+            <div class="story-sidebar">
+                <h2 class="chapter-title">The Journey Continues</h2>
+                <p class="chapter-subtitle">
+                    From cherished memories to a vibrant future, Skyline SMP is back, building on our legacy for an even grander adventure.
+                </p>
+            </div>
+            
+            <div class="story-content">
+                <p class="message-text">
+                    The whispers of a new dawn have become a roar! Skyline SMP is officially returning, not just as a continuation, but as a true rebirth. We've taken the lessons from our past, listened intently to our incredible community, and are now building an unparalleled Minecraft experience from the ground up. Get ready to soar higher than ever before!
+                </p>
                 
-                <div class="story-content">
-                    <p class="message-text">
-                        After careful consideration, we have made the difficult decision to discontinue Skyline SMP in its current form. 
-                        This wasn't an easy choice, but due to declining player interest and financial constraints, 
-                        we can no longer maintain the server at the quality our community deserves. However, this isn't the end of our journey together - Skyline SMP will be transforming into something new and exciting!
-                    </p>
-                    
-                    <h3 style="color: var(--sunset-orange); margin: 2rem 0 1rem; font-size: 1.4rem;">Why We're Closing</h3>
-                    <ul class="reasons-list">
-                        <li>Decreased player activity and engagement</li>
-                        <li>Rising operational costs and server maintenance</li>
-                        <li>Limited resources to implement new features</li>
-                        <li>Focus shift to other projects and commitments</li>
-                    </ul>
-                </div>
+                <h3 style="color: var(--sunset-orange); margin: 2rem 0 1rem; font-size: 1.4rem;">What's New & Improved</h3>
+                <ul class="feature-list">
+                    <li>Better Dedicated Server: Experience unparalleled performance, stability, and minimal lag with our brand-new, powerful dedicated server infrastructure.</li>
+                    <li>Minecraft 1.21.1: Dive into the latest Minecraft update with all its exciting new features, blocks, and challenges, ready for you to explore.</li>
+                    <li>Enhanced Anti-Grief & Security: Play with peace of mind thanks to robust protection measures safeguarding your creations and ensuring fair play.</li>
+                    <li>Community-Driven Development: Your voice matters more than ever. We're committed to building Skyline SMP with continuous community feedback and engagement.</li>
+                </ul>
             </div>
+        </div>
 
-            <!-- Stats Showcase -->
-            <div class="stats-showcase">
-                <div class="stat-card">
-                    <span class="stat-number">~1</span>
-                    <span class="stat-label">Year Running</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">500+</span>
-                    <span class="stat-label">Players Joined</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">∞</span>
-                    <span class="stat-label">Memories Made</span>
-                </div>
-            </div>
-
-            <!-- Gratitude Section -->
-            <div class="gratitude-section">
-                <h2 class="gratitude-title">Thank You, Community</h2>
-                <p class="gratitude-text">
-                    To every player who logged in, built amazing structures, participated in events, 
-                    and made Skyline SMP feel like home - thank you. Your creativity, friendship, 
-                    and dedication made this server special. The builds you created, the friendships 
-                    you formed, and the memories we shared will always be cherished.
-                </p>
-            </div>
-
-            <!-- Transformation Section -->
-            <div class="transformation-section">
-                <h2 class="transformation-title">A New Beginning</h2>
-                <p class="transformation-text">
-                    While Skyline SMP as you know it is coming to an end, we're excited to announce that this is not goodbye forever. 
-                    The server will be transforming into something new and different - a fresh adventure that builds upon everything 
-                    we've learned from our time together. Stay tuned for announcements about what's coming next!
-                </p>
-                <div class="transformation-badge">
-                    <span>Coming Soon</span>
-                    <div class="badge-glow"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Farewell Section -->
-        <section class="farewell-section">
-            <p class="farewell-text">
-                It has been an absolute pleasure to pursue Skyline and witness the incredible 
-                community that formed around it. While this chapter closes, a new one is about to begin. 
-                The memories and friendships will live on forever, and we can't wait to embark on this 
-                new adventure together. <span class="heart">♥</span>
+        <!-- Founders Section -->
+        <section class="founders-section">
+            <h2 class="chapter-title">Meet the Founders</h2>
+            <p class="chapter-subtitle" style="margin-bottom: 3rem;">
+                The dedicated team bringing Skyline SMP back to life, combining original vision with fresh expertise.
             </p>
-            <p class="signature">— The Skyline SMP Team</p>
+            <div class="founders-grid">
+                <div class="founder-card">
+                    <div class="founder-avatar">V</div>
+                    <h3 class="founder-name">Vyxzl</h3>
+                    <p class="founder-role">Founder & Visionary</p>
+                    <p class="founder-bio">
+                        The original spark behind Skyline SMP, Vyxzl's enduring vision ignited this community and now leads its grand return, ensuring the core spirit remains.
+                    </p>
+                </div>
+                <div class="founder-card">
+                    <div class="founder-avatar">J</div>
+                    <h3 class="founder-name">Jontee</h3>
+                    <p class="founder-role">Founder & Community Lead</p>
+                    <p class="founder-bio">
+                        A foundational member from the early days, Jontee's unwavering dedication to the community and operational expertise are crucial to Skyline's vibrant new chapter.
+                    </p>
+                </div>
+                <div class="founder-card">
+                    <div class="founder-avatar">G</div>
+                    <h3 class="founder-name">Griffindor</h3>
+                    <p class="founder-role">Founder & Technical Architect</p>
+                    <p class="founder-bio">
+                        The newest addition, Griffindor brings extensive experience in server optimization, development, and a keen eye for detail, ensuring a robust and cutting-edge experience.
+                    </p>
+                </div>
+            </div>
         </section>
-    </div>
 
-    <script>
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const numStars = 150;
+        <!-- Gratitude Section -->
+        <div class="gratitude-section">
+            <h2 class="gratitude-title">Thank You, Community</h2>
+            <p class="gratitude-text">
+                To every player who logged in, built amazing structures, participated in events, 
+                and made Skyline SMP feel like home - thank you. Your creativity, friendship, 
+                and dedication made this server special. The builds you created, the friendships 
+                you formed, and the memories we shared will always be cherished. We can't wait to embark on this next adventure with you.
+            </p>
+        </div>
+
+        <!-- Join Us Section -->
+        <div class="join-us-section">
+            <h2 class="join-us-title">Join the Rebirth!</h2>
+            <p class="join-us-text">
+                The new era of Skyline SMP is almost here! Join our Discord community to get the latest announcements,
+                connect with fellow players, and be among the first to experience the reborn server.
+            </p>
+            <a href="https://discord.gg/KqHuMH6egF" target="_blank" rel="noopener noreferrer" class="discord-button">
+                <span>Join Our Discord!</span>
+                <div class="badge-glow"></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Final Message Section -->
+    <section class="final-message-section">
+        <p class="final-message-text">
+            The journey of Skyline SMP continues, transformed and ready for new heights. We are thrilled to embark on this next adventure with our incredible community. The sky is not the limit, it's just the beginning! <span class="heart">♥</span>
+        </p>
+        <p class="signature">— The Skyline SMP Reborn Team</p>
+    </section>
+</div>
+
+<script>
+    function createStars() {
+        const starsContainer = document.getElementById('stars');
+        const numStars = 150;
+        
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
             
-            for (let i = 0; i < numStars; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                
-                const size = Math.random() * 3 + 1;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                
-                starsContainer.appendChild(star);
+            const size = Math.random() * 3 + 1;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            
+            starsContainer.appendChild(star);
+        }
+    }
+
+    function createOrb() {
+        const orb = document.createElement('div');
+        orb.className = 'orb';
+        
+        const size = Math.random() * 200 + 100;
+        const startX = Math.random() * (window.innerWidth + 200) - 100;
+        const opacity = Math.random() * 0.4 + 0.1;
+        const hue = Math.random() * 60 + 200;
+        
+        orb.style.width = size + 'px';
+        orb.style.height = size + 'px';
+        orb.style.left = startX + 'px';
+        orb.style.opacity = opacity;
+        orb.style.background = `radial-gradient(circle, hsla(${hue}, 70%, 60%, 0.15) 0%, transparent 70%)`;
+        orb.style.animationDuration = (Math.random() * 25 + 20) + 's';
+        orb.style.animationDelay = Math.random() * 10 + 's';
+        
+        document.getElementById('orbs').appendChild(orb);
+        
+        setTimeout(() => {
+            if (orb.parentNode) {
+                orb.remove();
             }
-        }
+        }, 35000);
+    }
 
-        function createOrb() {
-            const orb = document.createElement('div');
-            orb.className = 'orb';
-            
-            const size = Math.random() * 200 + 100;
-            const startX = Math.random() * (window.innerWidth + 200) - 100;
-            const opacity = Math.random() * 0.4 + 0.1;
-            const hue = Math.random() * 60 + 200;
-            
-            orb.style.width = size + 'px';
-            orb.style.height = size + 'px';
-            orb.style.left = startX + 'px';
-            orb.style.opacity = opacity;
-            orb.style.background = `radial-gradient(circle, hsla(${hue}, 70%, 60%, 0.15) 0%, transparent 70%)`;
-            orb.style.animationDuration = (Math.random() * 25 + 20) + 's';
-            orb.style.animationDelay = Math.random() * 10 + 's';
-            
-            document.getElementById('orbs').appendChild(orb);
-            
-            setTimeout(() => {
-                if (orb.parentNode) {
-                    orb.remove();
-                }
-            }, 35000);
-        }
+    setInterval(createOrb, 1200);
 
-        setInterval(createOrb, 1200);
+    for (let i = 0; i < 8; i++) {
+        setTimeout(createOrb, i * 300);
+    }
 
-        for (let i = 0; i < 8; i++) {
-            setTimeout(createOrb, i * 300);
-        }
-
-        document.querySelector('.scroll-indicator').addEventListener('click', () => {
-            document.querySelector('.content-section').scrollIntoView({
-                behavior: 'smooth'
-            });
+    document.querySelector('.scroll-indicator').addEventListener('click', () => {
+        document.querySelector('.content-section').scrollIntoView({
+            behavior: 'smooth'
         });
+    });
 
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const heroSection = document.querySelector('.hero-section');
-            const rate = scrolled * -0.5;
-            
-            heroSection.style.transform = `translateY(${rate}px)`;
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const heroSection = document.querySelector('.hero-section');
+        const rate = scrolled * -0.5;
+        
+        heroSection.style.transform = `translateY(${rate}px)`;
+    });
+
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
         });
+    }, observerOptions);
 
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        window.addEventListener('load', () => {
-            createStars();
-            
-            const animatedElements = document.querySelectorAll('.stat-card, .story-content, .gratitude-section');
-            animatedElements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'all 0.8s ease-out';
-                observer.observe(el);
-            });
+    window.addEventListener('load', () => {
+        createStars();
+        
+        const animatedElements = document.querySelectorAll('.story-content, .gratitude-section, .join-us-section, .founders-section, .founder-card');
+        animatedElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.8s ease-out';
+            observer.observe(el);
         });
+    });
 
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            const stars = document.querySelectorAll('.star');
-            stars.forEach((star, index) => {
-                if (index % 3 === 0) {
-                    const speed = 0.5;
-                    const x = (mouseX - 0.5) * speed;
-                    const y = (mouseY - 0.5) * speed;
-                    star.style.transform = `translate(${x}px, ${y}px)`;
-                }
-            });
+    document.addEventListener('mousemove', (e) => {
+        const mouseX = e.clientX / window.innerWidth;
+        const mouseY = e.clientY / window.innerHeight;
+        
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((star, index) => {
+            if (index % 3 === 0) {
+                const speed = 0.5;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+                star.style.transform = `translate(${x}px, ${y}px)`;
+            }
         });
+    });
 </script>
 </body>
 </html>
