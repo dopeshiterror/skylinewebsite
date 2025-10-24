@@ -1,906 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skyline SMP: Reborn</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-    :root {
-        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
-        --secondary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%);
-        --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 50%, #ff9ff3 100%);
-        --accent-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        --background-primary: #0a0a0f;
-        --background-secondary: #1a1a2e;
-        --background-tertiary: #16213e;
-        --glass-bg: rgba(255, 255, 255, 0.03); /* Slightly more opaque */
-        --glass-border: rgba(255, 255, 255, 0.15); /* Stronger border */
-        --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); /* Deeper shadow */
-        --text-primary: #ffffff;
-        --text-secondary: #e8e8e8;
-        --text-muted: #b0b0b0;
-        --shadow-primary: 0 25px 50px rgba(0, 0, 0, 0.5);
-        --shadow-glow: 0 0 60px rgba(102, 126, 234, 0.2);
-        --border-radius: 28px;
-        --sunset-orange: #ff7b54;
-        --sunset-pink: #ff6b9d;
-        --sunset-purple: #c44569;
-        --deep-blue: #1e3c72;
-        --night-blue: #2a5298;
-        --soft-white: #f8f9fa;
-        --warm-gray: #6c757d;
-        --dark-gray: #343a40;
-        --gold: #ffd700;
-        --silver: #c0c0c0;
-        --reborn-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%); /* For Reborn elements */
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Inter', sans-serif;
-        background: linear-gradient(135deg, var(--deep-blue) 0%, var(--night-blue) 50%, var(--sunset-purple) 100%);
-        color: var(--soft-white);
-        overflow-x: hidden;
-        line-height: 1.6;
-        min-height: 100vh;
-    }
-
-    body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: 
-            conic-gradient(from 0deg at 20% 30%, rgba(102, 126, 234, 0.1) 0deg, transparent 60deg),
-            conic-gradient(from 180deg at 80% 70%, rgba(255, 107, 107, 0.08) 0deg, transparent 60deg),
-            radial-gradient(circle at 50% 50%, rgba(118, 75, 162, 0.05) 0%, transparent 70%);
-        z-index: -2;
-        animation: backgroundPulse 15s ease-in-out infinite;
-    }
-
-    @keyframes backgroundPulse {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.8; transform: scale(1.05); }
-    }
-
-    .container {
-        position: relative;
-        z-index: 10;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .stars {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        pointer-events: none;
-    }
-
-    .star {
-        position: absolute;
-        background: white;
-        border-radius: 50%;
-        animation: twinkle 3s ease-in-out infinite;
-    }
-
-    @keyframes twinkle {
-        0%, 100% { opacity: 0.3; transform: scale(1); }
-        50% { opacity: 1; transform: scale(1.2); }
-    }
-
-    .floating-orbs {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        overflow: hidden;
-        pointer-events: none;
-    }
-
-    .orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(2px);
-        animation: floatOrb 30s infinite linear;
-        opacity: 0;
-    }
-
-    .orb:nth-child(1) { background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%); }
-    .orb:nth-child(2) { background: radial-gradient(circle, rgba(255, 107, 107, 0.12) 0%, transparent 70%); }
-    .orb:nth-child(3) { background: radial-gradient(circle, rgba(118, 75, 162, 0.1) 0%, transparent 70%); }
-    .orb:nth-child(4) { background: radial-gradient(circle, rgba(75, 192, 192, 0.08) 0%, transparent 70%); }
-
-    @keyframes floatOrb {
-        0% {
-            transform: translateY(100vh) translateX(-100px) rotate(0deg) scale(0);
-            opacity: 0;
-        }
-        5% {
-            opacity: 1;
-            transform: translateY(95vh) translateX(-50px) rotate(18deg) scale(1);
-        }
-        95% {
-            opacity: 1;
-            transform: translateY(5vh) translateX(100px) rotate(342deg) scale(1);
-        }
-        100% {
-            transform: translateY(-5vh) translateX(150px) rotate(360deg) scale(0);
-            opacity: 0;
-        }
-    }
-
-    .hero-section {
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        position: relative;
-        padding: 2rem;
-    }
-
-    .hero-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: 
-            radial-gradient(circle at 30% 20%, rgba(255, 123, 84, 0.3) 0%, transparent 50%),
-            radial-gradient(circle at 70% 80%, rgba(255, 107, 157, 0.2) 0%, transparent 50%);
-        z-index: -1;
-    }
-
-    .logo-container {
-        position: relative;
-        margin-bottom: 2rem;
-    }
-
-    .logo {
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(3rem, 12vw, 8rem);
-        font-weight: 900;
-        background: linear-gradient(45deg, var(--gold) 0%, var(--sunset-orange) 30%, var(--sunset-pink) 70%, var(--silver) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        letter-spacing: -0.02em;
-        line-height: 0.9;
-        animation: logoShine 4s ease-in-out infinite;
-        position: relative;
-    }
-
-    @keyframes logoShine {
-        0%, 100% { filter: brightness(1) drop-shadow(0 0 30px rgba(255, 215, 0, 0.3)); }
-        50% { filter: brightness(1.2) drop-shadow(0 0 50px rgba(255, 215, 0, 0.5)); }
-    }
-
-    .subtitle {
-        font-size: clamp(1.2rem, 4vw, 2rem);
-        font-weight: 300;
-        color: rgba(248, 249, 250, 0.8);
-        margin-bottom: 3rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-    }
-
-    .announcement-badge {
-        background: linear-gradient(135deg, var(--sunset-orange), var(--sunset-pink));
-        padding: 1rem 3rem;
-        border-radius: 50px;
-        font-size: clamp(1rem, 3vw, 1.4rem);
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        box-shadow: 0 10px 30px rgba(255, 123, 84, 0.3);
-        animation: float 3s ease-in-out infinite;
-        margin-bottom: 2rem;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-    }
-
-    .scroll-indicator {
-        position: absolute;
-        bottom: 2rem;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(248, 249, 250, 0.6);
-        font-size: 0.9rem;
-        text-align: center;
-        animation: bounce 2s infinite;
-    }
-
-    @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-        40% { transform: translateX(-50%) translateY(-10px); }
-        60% { transform: translateX(-50%) translateY(-5px); }
-    }
-
-    .content-section {
-        padding: 5rem 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-        width: 100%;
-    }
-
-    .story-grid {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 4rem;
-        margin-bottom: 5rem;
-        align-items: start;
-    }
-
-    .story-sidebar {
-        position: sticky;
-        top: 2rem;
-    }
-
-    .chapter-title {
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(2rem, 5vw, 3rem);
-        font-weight: 700;
-        color: var(--gold);
-        margin-bottom: 1rem;
-        line-height: 1.2;
-    }
-
-    .chapter-subtitle {
-        font-size: 1.1rem;
-        color: rgba(248, 249, 250, 0.7);
-        font-weight: 300;
-        line-height: 1.6;
-    }
-
-    .story-content {
-        background: var(--glass-bg);
-        backdrop-filter: blur(25px); /* Increased blur */
-        border-radius: 20px;
-        padding: 3rem;
-        border: 1px solid var(--glass-border);
-        box-shadow: var(--glass-shadow);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .story-content:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.2);
-    }
-
-    .message-text {
-        font-size: 1.2rem;
-        line-height: 1.8;
-        color: var(--soft-white);
-        margin-bottom: 2rem;
-    }
-
-    .feature-list { /* Renamed from reasons-list */
-        list-style: none;
-        margin: 2rem 0;
-    }
-
-    .feature-list li {
-        padding: 1rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        position: relative;
-        padding-left: 2.5rem; /* Increased padding for icon */
-        transition: all 0.3s ease;
-        font-size: 1.1rem;
-    }
-
-    .feature-list li:last-child {
-        border-bottom: none;
-    }
-
-    .feature-list li:hover {
-        padding-left: 3rem;
-        color: var(--gold);
-    }
-
-    .feature-list li::before {
-        content: "✓"; /* Checkmark icon */
-        position: absolute;
-        left: 0;
-        color: var(--reborn-gradient); /* Greenish gradient for new features */
-        font-size: 1.4rem;
-        font-weight: bold;
-        line-height: 1;
-    }
-
-    .stats-showcase {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        margin: 4rem 0;
-    }
-
-    .stat-card {
-        background: linear-gradient(135deg, rgba(255, 123, 84, 0.1), rgba(255, 107, 157, 0.1));
-        border-radius: 15px;
-        padding: 2rem;
-        text-align: center;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.4s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .stat-card::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.1), transparent);
-        animation: rotate 10s linear infinite;
-        z-index: -1;
-    }
-
-    .stat-card:hover {
-        transform: translateY(-10px) scale(1.05);
-        box-shadow: 0 20px 40px rgba(255, 123, 84, 0.2);
-    }
-
-    .stat-number {
-        font-family: 'Playfair Display', serif;
-        font-size: 3rem;
-        font-weight: 800;
-        color: var(--gold);
-        display: block;
-        margin-bottom: 0.5rem;
-    }
-
-    .stat-label {
-        font-size: 1rem;
-        color: rgba(248, 249, 250, 0.8);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-    }
-
-    .gratitude-section {
-        background: var(--glass-bg);
-        backdrop-filter: blur(25px);
-        border-radius: 25px;
-        padding: 4rem;
-        margin: 4rem auto; /* Center it */
-        text-align: center;
-        border: 1px solid var(--glass-border);
-        box-shadow: var(--glass-shadow);
-        position: relative;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .gratitude-section:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 255, 255, 0.2);
-    }
-
-    .gratitude-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, var(--sunset-orange), var(--gold), var(--sunset-pink));
-        border-radius: 25px 25px 0 0;
-    }
-
-    .gratitude-title {
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(2rem, 5vw, 3rem);
-        font-weight: 700;
-        color: var(--gold);
-        margin-bottom: 2rem;
-    }
-
-    .gratitude-text {
-        font-size: 1.3rem;
-        line-height: 1.8;
-        color: var(--soft-white);
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .join-us-section { /* Renamed from future-section */
-        background: var(--glass-bg);
-        backdrop-filter: blur(25px);
-        border-radius: 25px;
-        padding: 4rem;
-        margin: 4rem auto; /* Center it */
-        text-align: center;
-        border: 1px solid var(--glass-border);
-        box-shadow: var(--glass-shadow);
-        position: relative;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .join-us-section:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(67, 233, 123, 0.2);
-    }
-
-    .join-us-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: var(--reborn-gradient);
-        border-radius: 25px 25px 0 0;
-    }
-
-    .join-us-title { /* Renamed from future-title */
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(2rem, 5vw, 3rem);
-        font-weight: 700;
-        background: var(--reborn-gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 2rem;
-    }
-
-    .join-us-text { /* Renamed from future-text */
-        font-size: 1.3rem;
-        line-height: 1.8;
-        color: var(--soft-white);
-        max-width: 800px;
-        margin: 0 auto 3rem;
-    }
-
-    .discord-button { /* Renamed from future-badge */
-        display: inline-block;
-        background: var(--reborn-gradient);
-        padding: 1.2rem 3.5rem; /* Larger padding */
-        border-radius: 50px;
-        font-size: 1.2rem; /* Larger font */
-        font-weight: 700; /* Bolder */
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        position: relative;
-        overflow: hidden;
-        animation: pulse 2s ease-in-out infinite;
-        text-decoration: none; /* Ensure it's a link */
-        color: var(--soft-white); /* Text color */
-        box-shadow: 0 0 20px rgba(67, 233, 123, 0.3);
-        transition: all 0.3s ease;
-    }
-
-    .discord-button:hover {
-        transform: scale(1.05) translateY(-5px);
-        box-shadow: 0 0 30px rgba(67, 233, 123, 0.5), 0 0 50px rgba(0, 242, 254, 0.4);
-    }
-
-    .badge-glow {
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        animation: rotate 3s linear infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(67, 233, 123, 0.3); }
-        50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(67, 233, 123, 0.5); }
-    }
-
-    .final-message-section { /* Renamed from farewell-section */
-        text-align: center;
-        padding: 5rem 2rem;
-        background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.3));
-    }
-
-    .final-message-text { /* Renamed from farewell-text */
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(1.5rem, 4vw, 2.5rem);
-        font-weight: 500;
-        line-height: 1.6;
-        color: var(--soft-white);
-        max-width: 900px;
-        margin: 0 auto 2rem;
-    }
-
-    .heart {
-        color: var(--sunset-pink);
-        font-size: 1.5em;
-        animation: heartPulse 2s ease-in-out infinite;
-        display: inline-block;
-    }
-
-    @keyframes heartPulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.3); }
-    }
-
-    .signature {
-        font-size: 1.1rem;
-        color: rgba(248, 249, 250, 0.7);
-        font-style: italic;
-        margin-top: 3rem;
-    }
-
-    /* New: Founders Section Styling */
-    .founders-section {
-        padding: 5rem 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-        width: 100%;
-        text-align: center;
-    }
-
-    .founders-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 3rem;
-        margin-top: 4rem;
-    }
-
-    .founder-card {
-        background: var(--glass-bg);
-        backdrop-filter: blur(25px);
-        border-radius: 20px;
-        padding: 2.5rem;
-        border: 1px solid var(--glass-border);
-        box-shadow: var(--glass-shadow);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .founder-card::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.08), transparent);
-        animation: rotate 15s linear infinite;
-        z-index: -1;
-    }
-
-    .founder-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 215, 0, 0.2);
-    }
-
-    .founder-avatar {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        background: linear-gradient(45deg, var(--sunset-orange), var(--sunset-pink));
-        margin: 0 auto 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Playfair Display', serif;
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: var(--soft-white);
-        border: 3px solid var(--gold);
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-    }
-
-    .founder-name {
-        font-family: 'Playfair Display', serif;
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: var(--gold);
-        margin-bottom: 0.5rem;
-    }
-
-    .founder-role {
-        font-size: 1rem;
-        color: rgba(248, 249, 250, 0.7);
-        margin-bottom: 1rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-
-    .founder-bio {
-        font-size: 0.95rem;
-        color: var(--text-secondary);
-        line-height: 1.7;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 1024px) {
-        .story-grid {
-            grid-template-columns: 1fr;
-            gap: 2rem;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skyline 2.0 — Next Generation Minecraft SMP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
-        .story-sidebar {
-            position: static;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .hero-section {
-            padding: 1rem;
+        body {
+            background: #000000;
+            color: #ffffff;
         }
         
-        .content-section, .founders-section {
-            padding: 3rem 1rem;
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
         }
         
-        .story-content, .founder-card {
-            padding: 2rem;
+        .text-gradient {
+            background: linear-gradient(to bottom, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
-        .gratitude-section, .join-us-section {
-            padding: 2rem;
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .stats-showcase, .founders-grid {
-            grid-template-columns: 1fr;
+        .card-hover:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
         }
-    }
-
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.2);
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, var(--sunset-orange), var(--sunset-pink));
-        border-radius: 4px;
-    }
-
-    /* Selection */
-    ::selection {
-        background: rgba(255, 215, 0, 0.3);
-        color: var(--soft-white);
-    }
-</style>
+        
+        .countdown-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-primary {
+            background: #ffffff;
+            color: #000000;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #e5e5e5;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-secondary:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .nav-blur {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
 </head>
-<body>
-<div class="stars" id="stars"></div>
-<div class="floating-orbs" id="orbs"></div>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-blur">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="text-2xl font-semibold tracking-tight">Skyline 2.0</div>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm">
+                <a href="#features" class="text-gray-400 hover:text-white transition-colors">Features</a>
+                <a href="#about" class="text-gray-400 hover:text-white transition-colors">About</a>
+                <a href="#discord" class="text-gray-400 hover:text-white transition-colors">Community</a>
+            </div>
+            <button class="px-5 py-2 text-sm font-medium rounded-lg btn-primary">
+                Join Discord
+            </button>
+        </div>
+    </nav>
 
-<div class="container">
     <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="logo-container">
-            <h1 class="logo">Skyline SMP</h1>
-        </div>
-        <p class="subtitle">A journey that will touch the sky</p>
-        <div class="announcement-badge">Relaunch Confirmed!</div>
-        <div class="scroll-indicator">
-            <div>Scroll to discover our new beginning</div>
-            <div style="margin-top: 0.5rem;">↓</div>
-        </div>
-    </section>
-
-    <!-- Content Section -->
-    <section class="content-section">
-        <div class="story-grid">
-            <div class="story-sidebar">
-                <h2 class="chapter-title">The Journey Continues</h2>
-                <p class="chapter-subtitle">
-                    From cherished memories to a vibrant future, Skyline SMP is back, building on our legacy for an even grander adventure.
+    <main class="pt-32 pb-20 hero-gradient">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <!-- Main Title -->
+            <div class="text-center mb-20">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-xs font-medium text-gray-300 mb-8">
+                    <span class="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
+                    Launching December 1st, 2025
+                </div>
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-bold mb-8 tracking-tight text-gradient leading-none">
+                    Skyline 2.0
+                </h1>
+                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-light">
+                    Experience next-generation gameplay powered by custom scripts and reinforced with powerful anticheat technology developed by vyxzl.
                 </p>
             </div>
-            
-            <div class="story-content">
-                <p class="message-text">
-                    The whispers of a new dawn have become a roar! Skyline SMP is officially returning, not just as a continuation, but as a true rebirth. We've taken the lessons from our past, listened intently to our incredible community, and are now building an unparalleled Minecraft experience from the ground up. Get ready to soar higher than ever before!
-                </p>
+
+            <!-- Countdown Timer -->
+            <div class="max-w-5xl mx-auto mb-32">
+                <div class="countdown-box rounded-3xl p-8 md:p-12">
+                    <div class="text-center mb-10">
+                        <h2 class="text-sm font-medium text-gray-400 uppercase tracking-wider mb-2">Server Launch</h2>
+                        <p class="text-2xl font-light text-white">December 1st, 2025</p>
+                    </div>
+                    <div class="grid grid-cols-4 gap-4 md:gap-6" id="countdown">
+                        <div class="text-center">
+                            <div class="countdown-box rounded-2xl p-6 md:p-8 mb-3">
+                                <div class="text-4xl md:text-6xl font-light tabular-nums" id="days">00</div>
+                            </div>
+                            <div class="text-xs md:text-sm text-gray-500 font-medium uppercase tracking-wider">Days</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="countdown-box rounded-2xl p-6 md:p-8 mb-3">
+                                <div class="text-4xl md:text-6xl font-light tabular-nums" id="hours">00</div>
+                            </div>
+                            <div class="text-xs md:text-sm text-gray-500 font-medium uppercase tracking-wider">Hours</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="countdown-box rounded-2xl p-6 md:p-8 mb-3">
+                                <div class="text-4xl md:text-6xl font-light tabular-nums" id="minutes">00</div>
+                            </div>
+                            <div class="text-xs md:text-sm text-gray-500 font-medium uppercase tracking-wider">Minutes</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="countdown-box rounded-2xl p-6 md:p-8 mb-3">
+                                <div class="text-4xl md:text-6xl font-light tabular-nums" id="seconds">00</div>
+                            </div>
+                            <div class="text-xs md:text-sm text-gray-500 font-medium uppercase tracking-wider">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div id="features" class="mb-32">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Flagship Features</h2>
+                    <p class="text-gray-400 text-lg font-light">Powerful systems designed for the ultimate SMP experience</p>
+                </div>
                 
-                <h3 style="color: var(--sunset-orange); margin: 2rem 0 1rem; font-size: 1.4rem;">What's New & Improved</h3>
-                <ul class="feature-list">
-                    <li>Better Dedicated Server: Experience unparalleled performance, stability, and minimal lag with our brand-new, powerful dedicated server infrastructure.</li>
-                    <li>Minecraft 1.21.1: Dive into the latest Minecraft update with all its exciting new features, blocks, and challenges, ready for you to explore.</li>
-                    <li>Enhanced Anti-Grief & Security: Play with peace of mind thanks to robust protection measures safeguarding your creations and ensuring fair play.</li>
-                    <li>Community-Driven Development: Your voice matters more than ever. We're committed to building Skyline SMP with continuous community feedback and engagement.</li>
-                </ul>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Custom Scripts Card -->
+                    <div class="feature-card rounded-3xl p-8 md:p-10 card-hover">
+                        <div class="mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold mb-3">Custom Scripts</h3>
+                            <p class="text-gray-400 leading-relaxed font-light mb-8">
+                                Brand new custom-coded features designed exclusively for Skyline 2.0. Experience unique gameplay mechanics you won't find anywhere else.
+                            </p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-white mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-gray-300 font-light">Advanced economy and trading system</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-white mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-gray-300 font-light">TPA</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-white mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-gray-300 font-light">TEAMS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Anti-Cheat Card -->
+                    <div class="feature-card rounded-3xl p-8 md:p-10 card-hover">
+                        <div class="mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold mb-3">Skyline 2.0 Anti-Cheat</h3>
+                            <p class="text-gray-400 leading-relaxed font-light mb-8">
+                                Reinforced protection system ensuring fair gameplay with advanced detection algorithms and real-time monitoring.
+                            </p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-white mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-gray-300 font-light">Real-time cheat detection and prevention</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-white mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-gray-300 font-light">Automated response and ban system</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-white mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-gray-300 font-light">24/7 monitoring and fair play guarantee</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div id="discord" class="feature-card rounded-3xl p-12 md:p-16 text-center">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 tracking-tight">Join the community</h2>
+                <p class="text-gray-400 text-lg font-light mb-10 max-w-2xl mx-auto leading-relaxed">
+                    Be part of the next chapter in Minecraft SMP history. Connect with players, get updates, and secure your spot for launch day.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button class="px-8 py-4 rounded-xl font-medium btn-primary text-base">
+                        Join Discord Server
+                    </button>
+                    <button class="px-8 py-4 rounded-xl font-medium btn-secondary text-base">
+                        View Server Rules
+                    </button>
+                </div>
             </div>
         </div>
+    </main>
 
-        <!-- Founders Section -->
-        <section class="founders-section">
-            <h2 class="chapter-title">Meet the Founders</h2>
-            <p class="chapter-subtitle" style="margin-bottom: 3rem;">
-                The dedicated team bringing Skyline SMP back to life, combining original vision with fresh expertise.
-            </p>
-            <div class="founders-grid">
-                <div class="founder-card">
-                    <div class="founder-avatar">V</div>
-                    <h3 class="founder-name">Vyxzl</h3>
-                    <p class="founder-role">Founder & Visionary</p>
-                    <p class="founder-bio">
-                        The original spark behind Skyline SMP, Vyxzl's enduring vision ignited this community and now leads its grand return, ensuring the core spirit remains.
-                    </p>
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12 mt-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-sm text-gray-500">
+                    © 2025 Skyline 2.0 SMP. All rights reserved.
                 </div>
-                <div class="founder-card">
-                    <div class="founder-avatar">J</div>
-                    <h3 class="founder-name">Jontee</h3>
-                    <p class="founder-role">Founder & Community Lead</p>
-                    <p class="founder-bio">
-                        A foundational member from the early days, Jontee's unwavering dedication to the community and operational expertise are crucial to Skyline's vibrant new chapter.
-                    </p>
-                </div>
-                <div class="founder-card">
-                    <div class="founder-avatar">G</div>
-                    <h3 class="founder-name">Griffindor</h3>
-                    <p class="founder-role">Founder & Technical Architect</p>
-                    <p class="founder-bio">
-                        The newest addition, Griffindor brings extensive experience in server optimization, development, and a keen eye for detail, ensuring a robust and cutting-edge experience.
-                    </p>
+                <div class="flex gap-6 text-sm text-gray-500">
+                    <a href="#" class="hover:text-white transition-colors">Discord</a>
+                    <a href="#" class="hover:text-white transition-colors">Rules</a>
+                    <a href="#" class="hover:text-white transition-colors">Support</a>
                 </div>
             </div>
-        </section>
-
-        <!-- Gratitude Section -->
-        <div class="gratitude-section">
-            <h2 class="gratitude-title">Thank You, Community</h2>
-            <p class="gratitude-text">
-                To every player who logged in, built amazing structures, participated in events, 
-                and made Skyline SMP feel like home - thank you. Your creativity, friendship, 
-                and dedication made this server special. The builds you created, the friendships 
-                you formed, and the memories we shared will always be cherished. We can't wait to embark on this next adventure with you.
-            </p>
         </div>
+    </footer>
 
-        <!-- Join Us Section -->
-        <div class="join-us-section">
-            <h2 class="join-us-title">Join the Rebirth!</h2>
-            <p class="join-us-text">
-                The new era of Skyline SMP is almost here! Join our Discord community to get the latest announcements,
-                connect with fellow players, and be among the first to experience the reborn server.
-            </p>
-            <a href="https://discord.gg/KqHuMH6egF" target="_blank" rel="noopener noreferrer" class="discord-button">
-                <span>Join Our Discord!</span>
-                <div class="badge-glow"></div>
-            </a>
-        </div>
-    </section>
+    <!-- Countdown Script -->
+    <script>
+        const countDownDate = new Date("Dec 1, 2025 00:00:00").getTime();
 
-    <!-- Final Message Section -->
-    <section class="final-message-section">
-        <p class="final-message-text">
-            The journey of Skyline SMP continues, transformed and ready for new heights. We are thrilled to embark on this next adventure with our incredible community. The sky is not the limit, it's just the beginning! <span class="heart">♥</span>
-        </p>
-        <p class="signature">— The Skyline SMP Reborn Team</p>
-    </section>
-</div>
-
-<script>
-    function createStars() {
-        const starsContainer = document.getElementById('stars');
-        const numStars = 150;
-        
-        for (let i = 0; i < numStars; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
             
-            const size = Math.random() * 3 + 1;
-            star.style.width = size + 'px';
-            star.style.height = size + 'px';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 3 + 's';
-            star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
             
-            starsContainer.appendChild(star);
-        }
-    }
-
-    function createOrb() {
-        const orb = document.createElement('div');
-        orb.className = 'orb';
-        
-        const size = Math.random() * 200 + 100;
-        const startX = Math.random() * (window.innerWidth + 200) - 100;
-        const opacity = Math.random() * 0.4 + 0.1;
-        const hue = Math.random() * 60 + 200;
-        
-        orb.style.width = size + 'px';
-        orb.style.height = size + 'px';
-        orb.style.left = startX + 'px';
-        orb.style.opacity = opacity;
-        orb.style.background = `radial-gradient(circle, hsla(${hue}, 70%, 60%, 0.15) 0%, transparent 70%)`;
-        orb.style.animationDuration = (Math.random() * 25 + 20) + 's';
-        orb.style.animationDelay = Math.random() * 10 + 's';
-        
-        document.getElementById('orbs').appendChild(orb);
-        
-        setTimeout(() => {
-            if (orb.parentNode) {
-                orb.remove();
+            document.getElementById("days").innerHTML = String(days).padStart(2, '0');
+            document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
+            
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "<div class='col-span-4 text-4xl font-semibold'>Server is Live</div>";
             }
-        }, 35000);
-    }
-
-    setInterval(createOrb, 1200);
-
-    for (let i = 0; i < 8; i++) {
-        setTimeout(createOrb, i * 300);
-    }
-
-    document.querySelector('.scroll-indicator').addEventListener('click', () => {
-        document.querySelector('.content-section').scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const heroSection = document.querySelector('.hero-section');
-        const rate = scrolled * -0.5;
-        
-        heroSection.style.transform = `translateY(${rate}px)`;
-    });
-
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    window.addEventListener('load', () => {
-        createStars();
-        
-        const animatedElements = document.querySelectorAll('.story-content, .gratitude-section, .join-us-section, .founders-section, .founder-card');
-        animatedElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.8s ease-out';
-            observer.observe(el);
-        });
-    });
-
-    document.addEventListener('mousemove', (e) => {
-        const mouseX = e.clientX / window.innerWidth;
-        const mouseY = e.clientY / window.innerHeight;
-        
-        const stars = document.querySelectorAll('.star');
-        stars.forEach((star, index) => {
-            if (index % 3 === 0) {
-                const speed = 0.5;
-                const x = (mouseX - 0.5) * speed;
-                const y = (mouseY - 0.5) * speed;
-                star.style.transform = `translate(${x}px, ${y}px)`;
-            }
-        });
-    });
-</script>
+        }, 1000);
+    </script>
 </body>
 </html>
