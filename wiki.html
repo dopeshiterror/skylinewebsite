@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiki - Skyline 2.0 SMP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .wiki-sidebar {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .wiki-nav-item {
+            padding: 0.75rem 1.5rem;
+            color: #9ca3af;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 2px solid transparent;
+            font-weight: 400;
+        }
+
+        .wiki-nav-item:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.03);
+            border-left-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .wiki-nav-item.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: #ffffff;
+            font-weight: 500;
+        }
+
+        .wiki-content {
+            max-width: 900px;
+        }
+
+        .wiki-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .wiki-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .command-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            color: #10b981;
+            margin: 0.5rem 0;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .wiki-sidebar {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                height: 100vh;
+                width: 80%;
+                max-width: 300px;
+                z-index: 50;
+                transition: left 0.3s ease;
+            }
+
+            .wiki-sidebar.open {
+                left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 40;
+            }
+
+            .overlay.active {
+                display: block;
+            }
+        }
+
+        h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        h2 { font-size: 1.875rem; font-weight: 600; margin-bottom: 1rem; margin-top: 2rem; letter-spacing: -0.01em; }
+        h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.75rem; margin-top: 1.5rem; }
+        p { color: #9ca3af; line-height: 1.7; margin-bottom: 1rem; font-weight: 300; }
+        ul { color: #9ca3af; line-height: 1.8; margin-left: 1.5rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.5rem; font-weight: 300; }
+        strong { color: #ffffff; font-weight: 500; }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-green { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .badge-blue { background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
+        .badge-purple { background: rgba(168, 85, 247, 0.1); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.2); }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn fixed top-6 left-6 z-50 p-3 rounded-lg bg-white/5 border border-white/10" id="mobileMenuBtn">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="wiki-sidebar w-64 min-h-screen sticky top-0" id="sidebar">
+            <div class="p-6">
+                <a href="index.html" class="text-2xl font-bold tracking-tight mb-8 block">Skyline 2.0</a>
+                <p class="text-sm text-gray-500 font-light mb-6">Wiki & Documentation</p>
+            </div>
+            
+            <nav>
+                <div class="wiki-nav-item active" data-section="getting-started">Getting Started</div>
+                <div class="wiki-nav-item" data-section="features">Server Features</div>
+                <div class="wiki-nav-item" data-section="economy">Economy & Trading</div>
+                <div class="wiki-nav-item" data-section="teams">Teams System</div>
+                <div class="wiki-nav-item" data-section="commands">Commands</div>
+                <div class="wiki-nav-item" data-section="anticheat">Anti-Cheat</div>
+                <div class="wiki-nav-item" data-section="rules">Server Rules</div>
+                <div class="wiki-nav-item" data-section="faq">FAQ</div>
+            </nav>
+
+            <div class="p-6 mt-8">
+                <a href="index.html" class="text-sm text-gray-500 hover:text-white transition-colors">← Back to Home</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8 md:p-16">
+            <div class="wiki-content">
+                
+                <!-- Getting Started Section -->
+                <section class="wiki-section active" id="getting-started">
+                    <h1>Getting Started</h1>
+                    <p class="text-xl mb-8">Welcome to Skyline 2.0! Here's everything you need to know to begin your journey.</p>
+
+                    <div class="content-card">
+                        <h3>How to Join</h3>
+                        <p>Connect to Skyline 2.0 using the following server address:</p>
+                        <div class="command-box">play.skyline2.net</div>
+                        <p>Make sure you're running Minecraft Java Edition version 1.20 or higher.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>First Steps</h3>
+                        <ul>
+                            <li>Read the server rules with <strong>/rules</strong></li>
+                            <li>Join or create a team with <strong>/team</strong></li>
+                            <li>Set up your home location with <strong>/sethome</strong></li>
+                            <li>Start gathering resources and building your base</li>
+                            <li>Join our Discord community for updates and support</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>What Makes Skyline 2.0 Special?</h3>
+                        <p>Skyline 2.0 is not your average SMP. We've built a unique experience with:</p>
+                        <ul>
+                            <li><strong>Custom Economy System</strong> - Trade, buy, and sell with other players</li>
+                            <li><strong>Team Mechanics</strong> - Form alliances and compete together</li>
+                            <li><strong>Advanced Anti-Cheat</strong> - Fair gameplay for everyone</li>
+                            <li><strong>Regular Events</strong> - Competitions, challenges, and rewards</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Features Section -->
+                <section class="wiki-section" id="features">
+                    <h1>Server Features</h1>
+                    <p class="text-xl mb-8">Discover all the custom features that make Skyline 2.0 unique.</p>
+
+                    <div class="content-card">
+                        <h3>Custom Scripts</h3>
+                        <p>Our server runs on custom-built scripts designed to enhance your gameplay experience:</p>
+                        <ul>
+                            <li><strong>Advanced Economy System</strong> - Dynamic pricing, player shops, and trading</li>
+                            <li><strong>TPA (Teleport) System</strong> - Safe and convenient player teleportation</li>
+                            <li><strong>Teams System</strong> - Create and manage teams with shared resources</li>
+                            <li><strong>Custom Events</strong> - Automated events and challenges</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Quality of Life</h3>
+                        <span class="badge badge-green">Enhanced</span>
+                        <span class="badge badge-blue">Optimized</span>
+                        <span class="badge badge-purple">Custom</span>
+                        <ul class="mt-4">
+                            <li>Multiple home locations</li>
+                            <li>Back command after death</li>
+                            <li>Player warps and public locations</li>
+                            <li>Chest shops for easy trading</li>
+                            <li>Land claiming to protect your builds</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Economy Section -->
+                <section class="wiki-section" id="economy">
+                    <h1>Economy & Trading</h1>
+                    <p class="text-xl mb-8">Master the economy system and become a trading tycoon.</p>
+
+                    <div class="content-card">
+                        <h3>Currency System</h3>
+                        <p>Skyline 2.0 uses a custom currency called <strong>Skycoins</strong>. Earn them by:</p>
+                        <ul>
+                            <li>Mining valuable resources</li>
+                            <li>Completing server challenges</li>
+                            <li>Trading with other players</li>
+                            <li>Participating in events</li>
+                            <li>Selling items at shops</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Trading Commands</h3>
+                        <div class="command-box">/balance - Check your Skycoin balance</div>
+                        <div class="command-box">/pay [player] [amount] - Send money to another player</div>
+                        <div class="command-box">/shop - Open the server shop</div>
+                        <div class="command-box">/trade [player] - Request a trade with another player</div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Player Shops</h3>
+                        <p>Create your own shop to sell items to other players:</p>
+                        <ul>
+                            <li>Place a chest with items you want to sell</li>
+                            <li>Use <strong>/shop create</strong> to set up pricing</li>
+                            <li>Players can buy directly from your chest</li>
+                            <li>Earn passive income while offline</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Teams Section -->
+                <section class="wiki-section" id="teams">
+                    <h1>Teams System</h1>
+                    <p class="text-xl mb-8">Join forces with other players and dominate together.</p>
+
+                    <div class="content-card">
+                        <h3>Creating a Team</h3>
+                        <p>Start your own team and invite friends to join:</p>
+                        <div class="command-box">/team create [name] - Create a new team</div>
+                        <div class="command-box">/team invite [player] - Invite a player to your team</div>
+                        <div class="command-box">/team accept - Accept a team invitation</div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Team Features</h3>
+                        <ul>
+                            <li><strong>Shared Resources</strong> - Team bank and shared storage</li>
+                            <li><strong>Team Chat</strong> - Private communication channel</li>
+                            <li><strong>Team Territory</strong> - Claim land together</li>
+                            <li><strong>Team Ranks</strong> - Assign roles and permissions</li>
+                            <li><strong>Team Alliances</strong> - Form partnerships with other teams</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Team Management</h3>
+                        <div class="command-box">/team info - View team information</div>
+                        <div class="command-box">/team chat - Toggle team chat</div>
+                        <div class="command-box">/team kick [player] - Remove a player from team</div>
+                        <div class="command-box">/team leave - Leave your current team</div>
+                    </div>
+                </section>
+
+                <!-- Commands Section -->
+                <section class="wiki-section" id="commands">
+                    <h1>Commands</h1>
+                    <p class="text-xl mb-8">Complete list of available commands on Skyline 2.0.</p>
+
+                    <div class="content-card">
+                        <h3>Teleportation (TPA)</h3>
+                        <div class="command-box">/tpa [player] - Request to teleport to a player</div>
+                        <div class="command-box">/tpahere [player] - Request a player to teleport to you</div>
+                        <div class="command-box">/tpaccept - Accept a teleport request</div>
+                        <div class="command-box">/tpdeny - Deny a teleport request</div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Home & Warps</h3>
+                        <div class="command-box">/sethome [name] - Set a home location</div>
+                        <div class="command-box">/home [name] - Teleport to your home</div>
+                        <div class="command-box">/delhome [name] - Delete a home location</div>
+                        <div class="command-box">/warp [name] - Teleport to a public warp</div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>General Commands</h3>
+                        <div class="command-box">/spawn - Return to spawn</div>
+                        <div class="command-box">/back - Return to previous location</div>
+                        <div class="command-box">/rules - View server rules</div>
+                        <div class="command-box">/help - Get help and support</div>
+                    </div>
+                </section>
+
+                <!-- Anti-Cheat Section -->
+                <section class="wiki-section" id="anticheat">
+                    <h1>Anti-Cheat System</h1>
+                    <p class="text-xl mb-8">Learn about our powerful anti-cheat technology developed by vyxzl.</p>
+
+                    <div class="content-card">
+                        <h3>Skyline 2.0 Anti-Cheat</h3>
+                        <p>Our custom anti-cheat system, developed by <strong>vyxzl</strong>, ensures fair gameplay for all players. It monitors and prevents:</p>
+                        <ul>
+                            <li><strong>Movement Cheats</strong> - Fly, speed, teleport hacks</li>
+                            <li><strong>Combat Cheats</strong> - Kill aura, reach, auto-clicker</li>
+                            <li><strong>World Cheats</strong> - X-ray, nuker, scaffold</li>
+                            <li><strong>Exploit Prevention</strong> - Duplication, item manipulation</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>How It Works</h3>
+                        <p>The anti-cheat runs silently in the background, analyzing player behavior in real-time:</p>
+                        <ul>
+                            <li>Advanced pattern recognition</li>
+                            <li>Machine learning detection algorithms</li>
+                            <li>Automatic violation logging</li>
+                            <li>Staff notification system</li>
+                            <li>Regular updates to counter new cheats</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>False Positives</h3>
+                        <p>While rare, false positives can occur. If you believe you were falsely flagged:</p>
+                        <ul>
+                            <li>Contact staff immediately via Discord</li>
+                            <li>Provide details about what you were doing</li>
+                            <li>Our team will review the logs</li>
+                            <li>Legitimate players are always unbanned quickly</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Rules Section -->
+                <section class="wiki-section" id="rules">
+                    <h1>Server Rules</h1>
+                    <p class="text-xl mb-8">Follow these rules to ensure a positive experience for everyone.</p>
+
+                    <div class="content-card">
+                        <h3>General Conduct</h3>
+                        <ul>
+                            <li>Be respectful to all players and staff</li>
+                            <li>No harassment, hate speech, or discrimination</li>
+                            <li>Keep chat appropriate and family-friendly</li>
+                            <li>No spamming or advertising</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Gameplay Rules</h3>
+                        <ul>
+                            <li>No cheating, hacking, or exploiting bugs</li>
+                            <li>No griefing or stealing from other players</li>
+                            <li>Respect land claims and team territories</li>
+                            <li>No PvP in safe zones</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <p class="text-sm">For the complete list of rules and consequences, visit the <a href="rules.html" class="text-white underline hover:text-gray-300">full rules page</a>.</p>
+                    </div>
+                </section>
+
+                <!-- FAQ Section -->
+                <section class="wiki-section" id="faq">
+                    <h1>Frequently Asked Questions</h1>
+                    <p class="text-xl mb-8">Common questions answered.</p>
+
+                    <div class="content-card">
+                        <h3>When does the server launch?</h3>
+                        <p>Skyline 2.0 launches on <strong>December 1st, 2025</strong>. Join our Discord for countdown updates!</p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>What version of Minecraft do I need?</h3>
+                        <p>You need Minecraft Java Edition version 1.20 or higher to play on Skyline 2.0.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Is the server cracked/offline mode?</h3>
+                        <p>No, Skyline 2.0 is a premium server. You need a legitimate Minecraft account to join.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Can I use mods?</h3>
+                        <p>Quality of life mods like Optifine, minimaps, and inventory management are allowed. Cheat mods are strictly prohibited and will result in a ban.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>How do I report a player?</h3>
+                        <p>Use <strong>/report [player] [reason]</strong> in-game or contact staff on Discord with evidence.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Is there a world border?</h3>
+                        <p>Yes, the world has a border to ensure optimal server performance. The border size may be expanded based on player count.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>How often does the server reset?</h3>
+                        <p>Skyline 2.0 is designed to be a long-term world. We do not plan regular resets, but may reset for major Minecraft updates.</p>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Navigation functionality
+        const navItems = document.querySelectorAll('.wiki-nav-item');
+        const sections = document.querySelectorAll('.wiki-section');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const sectionId = item.getAttribute('data-section');
+                
+                // Update active nav item
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+                
+                // Show corresponding section
+                sections.forEach(section => section.classList.remove('active'));
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Close mobile menu
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+        });
+
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
